@@ -2,7 +2,8 @@
 #include <string>
 #include <iostream>
 #include "single_include/nlohmann/json.hpp"
-#include "keys.h"
+#include "keys.h" //in .gitignore
+#include "base64.h"
 using json = nlohmann::json;
 using std::string;
 
@@ -14,7 +15,7 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
     //buf is a pointer to the data that curl has for us
     //size*nmemb is the size of the buffer
 
-    for (int c = 0; c<size*nmemb; c++)
+    for (unsigned long c = 0; c<size*nmemb; c++)
     {
         data.push_back(buf[c]);
     }
@@ -27,28 +28,76 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
 int main(int argc, char** argv) {
     CURL *curl = curl_easy_init();
     if (curl) {
-
+        std::cout << apiKeys::CLIENT_ID << std::endl;
+        std::cout << apiKeys::CLIENT_SECRET << std::endl;
         //we're going to access the Spotify API by using the Client Credentials Flow
         //https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
         //first curl the api/token endpoint with the header with a base64 encoded clientkey:clientsecret
         //that will return a json object with a access token
         //Then we can access any public endpoint by adding that access token in the header of the curl
-        curl_easy_setopt(curl,  CURLOPT_URL, "https://api.spotify.com/v1/playlists/spotify:playlist:7DYJeAV6l6GwfXLQtLV5Rd");
+        curl_easy_setopt(curl,  CURLOPT_URL, "https://api.spotify.com/api/token");
+        
         curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         std::string response_string;
         std::string header_string;
+        //the CURLOPT_WRITEFUNCTION writes things to a buffer, can use this to process the data
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCallback);
         curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
-        curl_easy_perform(curl);
+        //Need to set headers - need to know the length of the file before posting.
+        //We build our own list of headers and then pass that list to libcurl
+        struct curl_slist *headers = NULL;
+            //creating the base64encoding of client id and secret
+            std::string client_id_secret = apiKeys::CLIENT_ID + ":" + apiKeys::CLIENT_SECRET;
+            std::string encoded_id_secret = base64_encode(client_id_secret);
+            std::cout << client_id_secret << std::endl;
+            std::cout << encoded_id_secret << std::endl;
+            std::string auth_header = "Authentication: Basic " + encoded_id_secret;
+            const char * char_ptr_auth_header = auth_header.c_str(); //need to convert it into a character pointer
+        headers = curl_slist_append(headers, char_ptr_auth_header);
+        
+        /* post binary data */
+        //curl_easy_setopt(easyhandle, CURLOPT_POSTFIELDS, binaryptr);
+        
+        /* set the size of the postfields data */
+        //curl_easy_setopt(easyhandle, CURLOPT_POSTFIELDSIZE, 23L);
+        
+        /* pass our list of custom made headers */
+        //curl_easy_setopt(easyhandle, CURLOPT_HTTPHEADER, headers);
+        
+        //curl_easy_perform(easyhandle); /* post away! */
+        
+        //curl_slist_free_all(headers); /* free the header list */
 
+        //reuse the handle (curl) if making another transfer
+        curl_easy_perform(curl);
         std::cout << std::endl << data << std::endl;
 
 
         curl_easy_cleanup(curl);
         curl_global_cleanup();
 
+
+
+        /*******************************************
+         * 
+         * SPOTIFY FLOW
+         * 
+         * *****************************************/
+        //First request authorization
+        //Make a POST request to https://accounts.spotify.com/api/token
+        //Data for POST request is "grant_type=client_credentials"
+        //Get the Client ID and Secret
+        //Create a header with the format "Authorization: Basic <base64Encoded client_id:client_secret>"
+        //Make this POST request
+        //Callback will return a JSON object with an access token
+        //Parse the JSON to get the access token for actually accessing the API
+
+        //Second use access token to access Spotify API
+        //Make a GET request at https://api.spotify.com/v1/......
+        //Create a header with the format "Authorization: Bearer <access_token>"
+        //Parse the JSON to create a graph using this data
         return 0;
     }
 }
