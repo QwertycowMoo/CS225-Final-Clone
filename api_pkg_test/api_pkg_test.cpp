@@ -6,7 +6,8 @@
 #include "base64.h"
 using json = nlohmann::json;
 using std::string;
-
+using std::cout;
+using std::endl;
 
 //to compile: clang++ api_pkg_test.cpp -std=c++11 -l curl
 string data;
@@ -26,6 +27,12 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
 //spotify:playlist:7DYJeAV6l6GwfXLQtLV5Rd
 
 int main(int argc, char** argv) {
+    json j;
+    j["instrument"] = "guitar";
+    std::vector<int> v = {1,2,3,4,5};
+    j["numbers"] = v;
+    cout << j << endl;
+    cout << endl << endl;
     CURL *curl = curl_easy_init();
     if (curl) {
         std::cout << CLIENT_ID << std::endl;
@@ -35,7 +42,7 @@ int main(int argc, char** argv) {
         //first curl the api/token endpoint with the header with a base64 encoded clientkey:clientsecret
         //that will return a json object with a access token
         //Then we can access any public endpoint by adding that access token in the header of the curl
-        curl_easy_setopt(curl,  CURLOPT_URL, "https://api.spotify.com/api/token");
+        curl_easy_setopt(curl,  CURLOPT_URL, "https://accounts.spotify.com/api/token");
         
         curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
         curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
@@ -53,7 +60,7 @@ int main(int argc, char** argv) {
             std::string encoded_id_secret = base64_encode(client_id_secret);
             std::cout << client_id_secret << std::endl;
             std::cout << encoded_id_secret << std::endl;
-            std::string auth_header = "Authentication: Basic " + encoded_id_secret;
+            std::string auth_header = "Authorization: Basic " + encoded_id_secret;
             const char * char_ptr_auth_header = auth_header.c_str(); //need to convert it into a character pointer
             std::cout << char_ptr_auth_header << std::endl;
         headers = curl_slist_append(headers, char_ptr_auth_header);
@@ -68,11 +75,27 @@ int main(int argc, char** argv) {
 
         //So it seems that the curl only works with the specific -X "POST" specification and not with just the -d. MAybe try to specifically type the request?
         CURLcode res = curl_easy_perform(curl);
-        json response;
-        response = data;
-        std::cout << std::endl << response << std::endl;
+        json j_access_token;
+        j_access_token = json::parse(data); //we can get the json data from this data
+        string acc_token = j_access_token["access_token"];
 
-
+        cout << endl << endl << acc_token << endl;
+        if (res == CURLE_OK) {
+            //we got the access token now, use it to access a track
+            data = "";
+            curl_easy_setopt(curl,  CURLOPT_URL, "https://api.spotify.com/v1/playlists/7DYJeAV6l6GwfXLQtLV5Rd");
+            std::string acc_token_header = "Authorization: Bearer " + acc_token;
+            curl_slist_free_all(headers);
+            headers = curl_slist_append(headers, acc_token_header.c_str());
+            cout << acc_token_header << endl;
+            curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+            cout << "performing curl" << endl;
+            res = curl_easy_perform(curl);
+            json j_playlist;
+            //j_playlist = json::parse(data);
+            cout << data << endl;
+        }
+        
         curl_easy_cleanup(curl);
         curl_global_cleanup();
 
