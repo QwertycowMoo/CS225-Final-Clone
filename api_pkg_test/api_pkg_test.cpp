@@ -15,7 +15,6 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
     //callback must have this declaration
     //buf is a pointer to the data that curl has for us
     //size*nmemb is the size of the buffer
-
     for (unsigned long c = 0; c<size*nmemb; c++)
     {
         data.push_back(buf[c]);
@@ -25,6 +24,8 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
 
 //access key: jg3OTQwNGYzNzViNGNhMDkyZGJmMDI2Yjg1YzhkN2Q6ZGQ4Njk4MjExYzQyNDhhNTgzOTMyM2ZiNzExNWNmNzkgDQo=
 //spotify:playlist:7DYJeAV6l6GwfXLQtLV5Rd
+
+
 
 int main(int argc, char** argv) {
     json j;
@@ -82,12 +83,21 @@ int main(int argc, char** argv) {
         cout << endl << endl << acc_token << endl;
         if (res == CURLE_OK) {
             //we got the access token now, use it to access a track
+           curl_easy_reset(curl);
+
+            curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
+            curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
+            //the CURLOPT_WRITEFUNCTION writes things to a buffer, can use this to process the data
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCallback);
+            curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
             data = "";
             curl_easy_setopt(curl,  CURLOPT_URL, "https://api.spotify.com/v1/playlists/7DYJeAV6l6GwfXLQtLV5Rd");
             std::string acc_token_header = "Authorization: Bearer " + acc_token;
             curl_slist_free_all(headers);
+            headers = NULL;
             headers = curl_slist_append(headers, acc_token_header.c_str());
-            cout << acc_token_header << endl;
+            cout << "header data: " << headers->data << endl;
+
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
             cout << "performing curl" << endl;
             res = curl_easy_perform(curl);
