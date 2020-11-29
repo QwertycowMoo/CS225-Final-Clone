@@ -1,3 +1,9 @@
+/**
+ * DEPRECIATED - USE THE ACTUAL MAIN FUNCTION WITH SPOTIFY.CPP - CODE IS KEPT FOR HISTORY PURPOSES
+ * */
+
+
+
 #include <curl/curl.h>
 #include <string>
 #include <iostream>
@@ -119,12 +125,11 @@ int main(int argc, char** argv) {
                     toRemoveArtists.erase("external_urls");
                 }   
                 toRemove.erase("external_urls"); //"spotify": "https://open.spotify.com/album/1T097JCsLabSVK0ZCwSOjs"
-                
-
 
             }  
             //cout << data << endl;
             cout << j_playlist.dump(4) << endl;
+            //
         }
         
         curl_easy_cleanup(curl);
