@@ -25,7 +25,7 @@ size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up) {
 //access key: jg3OTQwNGYzNzViNGNhMDkyZGJmMDI2Yjg1YzhkN2Q6ZGQ4Njk4MjExYzQyNDhhNTgzOTMyM2ZiNzExNWNmNzkgDQo=
 //spotify:playlist:7DYJeAV6l6GwfXLQtLV5Rd
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) {z
     CURL *curl = curl_easy_init();
     if (curl) {
         std::cout << CLIENT_ID << std::endl;
