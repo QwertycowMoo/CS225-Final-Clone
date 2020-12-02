@@ -1,5 +1,6 @@
 keys.h
 keys.py
+*.o
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
