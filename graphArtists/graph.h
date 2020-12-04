@@ -23,6 +23,7 @@ class Graph {
         bool InsertEdge(Vertex source, Vertex dest, Edge* label);
         Edge RemoveEdge(Vertex source, Vertex dest);
 
+
     private:
         map<Vertex, list<Edge*>> adjacencyList;
         list<Edge*> edgeList;
