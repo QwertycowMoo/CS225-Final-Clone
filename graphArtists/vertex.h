@@ -1,11 +1,12 @@
-#include <string>
 #pragma once
+
+#include <string>
 
 using std::string;
 
-class Artist {
+class Vertex {
     public:
-        Artist(string id, string name);
+        Vertex(string id, string name);
         string getId();
         string getName(); 
 
