@@ -2,4 +2,6 @@
 
 class Edge{
     
+    private:
+        Song s;
 };

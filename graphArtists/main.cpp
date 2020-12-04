@@ -1,5 +1,7 @@
 #include "graph.h"
 #include "csvParser.cpp"
+#include "song.h"
+#include "artist.h"
 #include <iostream>
 
 
