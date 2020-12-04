@@ -3,5 +3,5 @@
 #pragma once
 
 class Graph {
-    
+    Graph();
 };
