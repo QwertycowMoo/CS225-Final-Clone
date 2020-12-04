@@ -13,13 +13,11 @@
 #include "graph.h"
 #include "vertex.h"
 
-
 using std::string;
 using std::vector;
 
 class CSVParser {
     public:
-        static vector<vector<string>> parseCSV(string filename);
-        static Graph dataToGraph(vector<vector<string>>& data);
-
+        static vector<vector<string> > parseCSV(string filename);
+        static Graph dataToGraph(vector<vector<string> >& data);
 };
