@@ -24,6 +24,6 @@ class Graph {
         Edge RemoveEdge(Vertex source, Vertex dest);
 
     private:
-        map<Vertex, list<Edge*>> adjacencyList;
-        list<Edge*> edgeList;
+        map<Vertex, int> VertexList; // maps key to int index
+        list<Edge> edgeList; // linked list of edges
 };

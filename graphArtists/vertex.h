@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 using std::string;
 
@@ -8,7 +9,7 @@ class Vertex {
     public:
         Vertex(string id, string name);
         string getId();
-        string getName(); 
+        string getName();
 
     private:
         string id_;
