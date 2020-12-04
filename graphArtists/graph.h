@@ -23,6 +23,11 @@ class Graph {
         bool InsertEdge(Vertex source, Vertex dest, Edge* label);
         Edge RemoveEdge(Vertex source, Vertex dest);
 
+        vector<Vertex> getAllVertices();
+        vector<Edge> getAllEdges()
+        vector<Edge> getIncidentEdges(Vertex v);
+
+
     private:
         map<Vertex, list<Edge*>> adjacencyList;
         list<Edge*> edgeList;
