@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 using std::string;
 
@@ -11,7 +12,7 @@ class Vertex {
     // *** Helper functions ***
         // getter
         string getId();
-        string getName(); 
+        string getName();
 
         // setter
         void setId(string id);
@@ -22,4 +23,6 @@ class Vertex {
         string id_;
         // the artist's name
         string name_;
+
+        std::list<Edge*>* adjacencyList;
 };

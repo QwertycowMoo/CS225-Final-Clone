@@ -2,7 +2,7 @@
 #pragma once
 
 #include <string>
-
+#include <list>
 
 using std::string;
  
@@ -35,4 +35,6 @@ class Edge {
         string name_;
         // The length of the song, (milliseconds)
         int length_ms_;
+
+        std::list<Edge*>* adjacencyList;
 };
