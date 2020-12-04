@@ -1,11 +1,11 @@
 #include "edge.h"
 #include "vertex.h"
-#include <map>
+#include <unordered_map>
 #include <list>
 #pragma once
 
 using std::list;
-using std::map;
+using std::unordered_map;
 
 /**
  * A weighted, undirected graph implementation using an adjacency list.
@@ -29,6 +29,6 @@ class Graph {
 
 
     private:
-        map<Vertex, list<Edge*>> adjacencyList;
-        list<Edge*> edgeList;
+        unordered_map<Vertex, int> VertexList; // maps key to int index
+        list<Edge> edgeList; // linked list of edges
 };
