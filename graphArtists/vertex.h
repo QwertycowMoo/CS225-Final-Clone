@@ -23,4 +23,6 @@ class Vertex {
         string id_;
         // the artist's name
         string name_;
+
+        std::list<Edge*>* adjacencyList;
 };
