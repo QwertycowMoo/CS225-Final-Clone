@@ -2,6 +2,7 @@
 #include "graph.h"
 
 #include <unordered_map>
+#include <iostream>
 
 Graph::Graph() {
 
@@ -21,13 +22,12 @@ Graph::~Graph() {
  * Checks the vertex list for vertexes with the current artist. If so, returns a reference to that vertex.
  * Otherwise, it will create a new vertex and add it to the vertex list.
  */
-Vertex* Graph::insertVertex(const string& artistName, const string& id) {
+Vertex* Graph::insertVertex(const string& id, const string& artistName) {
     if (vertexList.find(id) != vertexList.end()) {
         return vertexList[id];
-        //return (*vertexList.find(id)).second;
     }
-
-    Vertex* artist = new Vertex(artistName, id);
+    
+    Vertex* artist = new Vertex(id, artistName);
     vertexList.insert(std::make_pair(id, artist));
 
     return artist;
@@ -38,7 +38,7 @@ Vertex* Graph::insertVertex(const string& artistName, const string& id) {
  * same song. If not, construct an edge and add it to the edge list. Then, add the edge to the list of
  * edges held in each vertex.
  */
-bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songTitle, string songID, int songLength) {
+bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songID, string songTitle, int songLength) {
     if (checkIfEdgeExists(firstArtist, secondArtist, songID)) {
         return false;
     }
@@ -57,6 +57,7 @@ bool Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string 
 
     for (Edge song : firstArtistSongs) {
         std::pair<std::string, std::string> songArtists = song.getArtistIDs();
+        
         if (song.getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && vertexList[songArtists.second]->getName() == secondArtist->getName()) 
             || (vertexList[songArtists.first]->getName() == secondArtist->getName() && vertexList[songArtists.second]->getName() == firstArtist->getName()))) {
             return true;
@@ -66,11 +67,11 @@ bool Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string 
     return false;
 }
 
-vector<Vertex> Graph::getAllVertices() {
-    vector<Vertex> artists;
+vector<Vertex*> Graph::getAllVertices() {
+    vector<Vertex*> artists;
 
     for (std::pair<string, Vertex*> cur : vertexList) {
-        artists.push_back(*cur.second);
+        artists.push_back(cur.second);
     }
 
     return artists;

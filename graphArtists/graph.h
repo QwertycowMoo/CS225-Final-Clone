@@ -30,7 +30,7 @@ class Graph {
         Vertex* insertVertex(const string& artistName, const string& id);
         bool insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songTitle, string songID, int songLength);
 
-        vector<Vertex> getAllVertices();
+        vector<Vertex*> getAllVertices();
         vector<Edge> getAllEdges();
         vector<Edge> getIncidentEdges(Vertex* v);
         

@@ -11,11 +11,11 @@ int main(int argc, char** argv) {
 
     Graph g = CSVParser::dataToGraph(data);
     //data is currently all strings, will need to
-    std::vector<Vertex> artists = g.getAllVertices();
+    std::vector<Vertex*> artists = g.getAllVertices();
 
     std::cout << "All artists in graph:";
-    for (Vertex v : artists) {
-        std::cout << v.getName();
+    for (Vertex* v : artists) {
+        std::cout << v->getName();
     }
     std::cout << std::endl;
 
