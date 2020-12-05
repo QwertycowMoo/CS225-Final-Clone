@@ -64,3 +64,7 @@ string Edge::msToMinSecs(int ms) {
     int secs = ms - (minutes * 60 * 1000);
     return std::to_string(minutes) + "m " + std::to_string(secs) + "s";
 }
+
+std::pair<Vertex, Vertex> Edge::getArtists() {
+    return artists;
+}

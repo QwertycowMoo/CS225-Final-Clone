@@ -20,16 +20,16 @@ class Graph {
          */
         Graph();
 
-        void insertVertex(string artistName, string id);
-        
-        bool insertEdge(string firstArtist, string secondArtist, string songTitle);
+        Vertex& insertVertex(const string& artistName, const string& id);
+        bool insertEdge(Vertex& firstArtist, Vertex& secondArtist, string songTitle, string songID, int songLength);
 
         vector<Vertex> getAllVertices();
-        vector<Edge> getAllEdges();
-        vector<Edge> getIncidentEdges(Vertex v);
+        list<Edge> getAllEdges();
+        vector<Edge> getIncidentEdges(Vertex& v);
+        bool checkIfEdgeExists(Vertex& firstArtist, Vertex& secondArtist, string songID);
 
     private:
-        unordered_map<Vertex, int> vertexList; // maps key to int index
+        unordered_map<string, Vertex> vertexList; // maps key to vertex
         list<Edge> edgeList; // linked list of edges
 
         // create the new edge object

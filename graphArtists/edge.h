@@ -3,6 +3,9 @@
 
 #include <string>
 #include <list>
+#include<vector>
+
+#include "vertex.h"
 
 using std::string;
  
@@ -28,6 +31,7 @@ class Edge {
 
         void print();
         string msToMinSecs(int ms);
+        std::pair<Vertex, Vertex> getArtists();
     private:
         // The 2 artists listed on the song
         std::pair<Vertex, Vertex> artists;

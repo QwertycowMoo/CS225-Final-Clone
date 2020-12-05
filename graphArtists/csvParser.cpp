@@ -33,11 +33,13 @@ vector<vector<string>> CSVParser::parseCSV(string filename) {
 }
 
 Graph CSVParser::dataToGraph(vector<vector<string>>& data) {
+    Graph g;
     for (vector<string> v : data) {
-        Vertex a1(v[0], v[1]);
-        Vertex a2(v[2], v[3]);
-        Edge s(v[4], v[5], std::atoi(v[6].c_str()));
-        s.print();
+        Vertex &a1 = g.insertVertex(v[0], v[1]);
+
+        Vertex &a2 = g.insertVertex(v[2], v[3]);
+
+        g.insertEdge(a1, a2, v[4], v[5], std::atoi(v[6].c_str()));
     }
-    return Graph();
+    return g;
 }

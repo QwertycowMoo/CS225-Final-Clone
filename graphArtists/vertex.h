@@ -7,7 +7,7 @@ using std::string;
 
 class Vertex {
     public:
-        Vertex(string id, string name);
+        Vertex(const string& id, const string& name);
 
     // *** Helper functions ***
         // getter
@@ -17,6 +17,10 @@ class Vertex {
         // setter
         void setId(string id);
         void setName(string name);
+        
+        void addEdge(Edge& song);
+
+        std::vector<Edge> getEdges();
 
     private:
         // the artist's ID (unique Spotify string)
@@ -24,5 +28,5 @@ class Vertex {
         // the artist's name
         string name_;
 
-        std::list<Edge> adjacencyList;
+        std::vector<Edge> adjacencyList;
 };

@@ -1,9 +1,9 @@
-#include "Vertex.h"
+#include "vertex.h"
 
 /**
  * Constructor for Vertex class
  */ 
-Vertex::Vertex(string id, string name):id_(id), name_(name){
+Vertex::Vertex(const string& id, const string& name):id_(id), name_(name){
     adjacencyList = std::list<Edge>();
 };
 
@@ -35,4 +35,12 @@ void Vertex::setId(string id) {
  */ 
 void Vertex::setName(string name) {
     name_ = name;
+}
+
+std::vector<Edge> Vertex::getEdges() {
+    return adjacencyList;
+}
+
+void Vertex::addEdge(Edge& song) {
+    adjacencyList.push_back(song);
 }
