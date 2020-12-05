@@ -2,7 +2,7 @@
 
 #include "edge.h"
 #include <string>
-#include <list>
+#include <vector>
 
 class Vertex {
     public:
@@ -17,11 +17,11 @@ class Vertex {
         void setId(std::string id);
         void setName(std::string name);
         
-        void addEdge(const Edge* song);
+        void addEdge(Edge* song);
 
         void print();
 
-        std::vector<Edge> getEdges();
+        std::vector<Edge*> getEdges();
 
     private:
         // the artist's ID (unique Spotify string)

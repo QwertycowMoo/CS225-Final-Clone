@@ -5,7 +5,7 @@
  * Constructor for Vertex class
  */ 
 Vertex::Vertex(const std::string& id, const std::string& name) : id_(id), name_(name) {
-    //adjacencyList = std::vector<Edge*>();
+    adjacencyList = std::vector<Edge*>();
 }
 
 /**
@@ -38,11 +38,11 @@ void Vertex::setName(std::string name) {
     name_ = name;
 }
 
-std::vector<Edge> Vertex::getEdges() {
+std::vector<Edge*> Vertex::getEdges() {
     return adjacencyList;
 }
 
-void Vertex::addEdge(const Edge* song) {
+void Vertex::addEdge(Edge* song) {
     adjacencyList.push_back(song);
 }
 

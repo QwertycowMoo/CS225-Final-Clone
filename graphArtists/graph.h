@@ -31,10 +31,11 @@ class Graph {
         bool insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songTitle, string songID, int songLength);
 
         vector<Vertex> getAllVertices();
-        list<Edge> getAllEdges();
+        vector<Edge> getAllEdges();
         vector<Edge> getIncidentEdges(Vertex* v);
+        
         bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
     private:
         map<string, Vertex*> vertexList; // maps artist id to vertex
-        list<Edge> edgeList; // linked list of edges
+        vector<Edge*> edgeList; // linked list of edges
 };

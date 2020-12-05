@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     }
     std::cout << std::endl;
 
-    std::list<Edge> songs = g.getAllEdges();
+    std::vector<Edge> songs = g.getAllEdges();
     std::cout << "All songs in graph:";
     for (Edge e : songs) {
         std::cout << e.getName();

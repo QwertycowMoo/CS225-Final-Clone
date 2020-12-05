@@ -11,6 +11,10 @@ Graph::~Graph() {
     for (map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
         delete it->second;
     }
+
+    for (Edge* e : edgeList) {
+        delete e;
+    }
 }
 
 /**
@@ -19,7 +23,8 @@ Graph::~Graph() {
  */
 Vertex* Graph::insertVertex(const string& artistName, const string& id) {
     if (vertexList.find(id) != vertexList.end()) {
-        return (*vertexList.find(id)).second;
+        return vertexList[id];
+        //return (*vertexList.find(id)).second;
     }
 
     Vertex* artist = new Vertex(artistName, id);
@@ -38,7 +43,7 @@ bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songTit
         return false;
     }
 
-    Edge song(firstArtist->getId(), secondArtist->getId(), songID, songTitle, songLength);
+    Edge* song = new Edge(firstArtist->getId(), secondArtist->getId(), songID, songTitle, songLength);
     edgeList.push_back(song);
 
     firstArtist->addEdge(song);
@@ -71,12 +76,20 @@ vector<Vertex> Graph::getAllVertices() {
     return artists;
 }
 
-list<Edge> Graph::getAllEdges() {
-    return edgeList;
+vector<Edge> Graph::getAllEdges() {
+    vector<Edge> edges;
+    for (Edge* e : edgeList) {
+        edges.push_back(*e);
+    }
+    return edges;
 }
 
 vector<Edge> Graph::getIncidentEdges(Vertex* v) {
-    return v->getEdges();
+    vector<Edge> edges;
+    for (Edge* e : v->getEdges()) {
+        edges.push_back(*e);
+    }
+    return edges;
 }
 
 
