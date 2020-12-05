@@ -1,22 +1,21 @@
 #pragma once
 
+#include "edge.h"
 #include <string>
 #include <list>
 
-using std::string;
-
 class Vertex {
     public:
-        Vertex(const string& id, const string& name);
+        Vertex(const std::string& id, const std::string& name);
 
     // *** Helper functions ***
         // getter
-        string getId();
-        string getName();
+        std::string getId();
+        std::string getName();
 
         // setter
-        void setId(string id);
-        void setName(string name);
+        void setId(const std::string& id);
+        void setName(const std::string& name);
         
         void addEdge(Edge& song);
 
@@ -24,9 +23,9 @@ class Vertex {
 
     private:
         // the artist's ID (unique Spotify string)
-        string id_;
+        std::string id_;
         // the artist's name
-        string name_;
+        std::string name_;
 
         std::vector<Edge> adjacencyList;
 };

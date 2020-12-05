@@ -8,7 +8,7 @@
 #include "vertex.h"
 
 using std::string;
- 
+
 /**
  * Class representing a Song in the graph;
  * Each edge requires two connecting vertices, (two artists who work on the given song)
@@ -16,7 +16,6 @@ using std::string;
 class Edge {
     public:
         Edge(Vertex artist1, Vertex artist2, string id, string name, int length_ms);
-        Edge(string id, string name);
 
     // *** Helper functions ***
         // getter

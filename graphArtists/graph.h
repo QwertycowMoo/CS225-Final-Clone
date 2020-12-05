@@ -1,9 +1,9 @@
+#pragma once
 #include "edge.h"
 #include "vertex.h"
 #include <vector>
 #include <unordered_map>
 #include <list>
-#pragma once
 
 using std::list;
 using std::unordered_map;

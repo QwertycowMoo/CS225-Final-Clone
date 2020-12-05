@@ -3,8 +3,9 @@
 
 using std::string;
 
-Edge::Edge(string id, string name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {};
-Edge::Edge(string id, string name) : id_(id), name_(name) {length_ms_ = 0; };
+Edge::Edge(Vertex artist1, Vertex artist2, string id, string name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {
+    artists = std::make_pair(artist1, artist2);
+}
 
 /**
  * @return The song ID (unique string)
