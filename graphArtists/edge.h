@@ -5,8 +5,6 @@
 #include <list>
 #include<vector>
 
-#include "vertex.h"
-
 using std::string;
 
 /**
@@ -15,7 +13,7 @@ using std::string;
  */
 class Edge {
     public:
-        Edge(Vertex artist1, Vertex artist2, string id, string name, int length_ms);
+        Edge(std::string artistID1, std::string artistID2, string id, string name, int length_ms);
 
     // *** Helper functions ***
         // getter
@@ -30,10 +28,10 @@ class Edge {
 
         void print();
         string msToMinSecs(int ms);
-        std::pair<Vertex, Vertex> getArtists();
+        std::pair<std::string, std::string> getArtistIDs();
     private:
         // The 2 artists listed on the song
-        std::pair<Vertex, Vertex> artists;
+        std::pair<std::string, std::string> artistIDs;
         // The song ID, (unique Spotify string)
         string id_;
         // The song name, (common title)

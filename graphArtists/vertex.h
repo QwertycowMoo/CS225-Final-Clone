@@ -6,7 +6,7 @@
 
 class Vertex {
     public:
-        Vertex(const std::string& id, const std::string& name);
+        Vertex(std::string id, std::string name);
 
     // *** Helper functions ***
         // getter
@@ -14,8 +14,8 @@ class Vertex {
         std::string getName();
 
         // setter
-        void setId(const std::string& id);
-        void setName(const std::string& name);
+        void setId(std::string id);
+        void setName(std::string name);
         
         void addEdge(Edge& song);
 

@@ -3,7 +3,9 @@
 /**
  * Constructor for Vertex class
  */ 
-Vertex::Vertex(const std::string& id, const std::string& name):id_(id), name_(name){
+Vertex::Vertex(std::string id, std::string name) {
+    id_ = id;
+    name_ = name;
     adjacencyList = std::vector<Edge>();
 };
 
@@ -25,7 +27,7 @@ std::string Vertex::getName() {
  * Sets the ID of a given artist's vertex
  * @param id artist ID to set
  */ 
-void Vertex::setId(const std::string& id) {
+void Vertex::setId(std::string id) {
     id_ = id;
 }
 
@@ -33,7 +35,7 @@ void Vertex::setId(const std::string& id) {
  * Sets the name of a given artist's vertex
  * @param name artist name to set
  */ 
-void Vertex::setName(const std::string& name) {
+void Vertex::setName(std::string name) {
     name_ = name;
 }
 

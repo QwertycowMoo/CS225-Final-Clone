@@ -11,13 +11,15 @@ Graph::Graph() {
  * Checks the vertex list for vertexes with the current artist. If so, returns a reference to that vertex.
  * Otherwise, it will create a new vertex and add it to the vertex list.
  */
-Vertex& Graph::insertVertex(const string& artistName, const string& id) {
-    if (vertexList.find(artistName) != vertexList.end()) {
-        return vertexList[artistName];
+Vertex Graph::insertVertex(string artistName, string id) {
+    if (vertexList.find(id) != vertexList.end()) {
+        return vertexList[id];
     }
 
     Vertex artist(id, artistName);
-    vertexList.insert(std::make_pair(artistName, artist));
+    vertexList.insert(std::make_pair(id, artist));
+
+    return artist;
 }
 
 /**
@@ -30,7 +32,7 @@ bool Graph::insertEdge(Vertex& firstArtist, Vertex& secondArtist, string songTit
         return false;
     }
 
-    Edge song(firstArtist, secondArtist, songTitle, songID, songLength);
+    Edge song(firstArtist.getId(), secondArtist.getId(), songID, songTitle, songLength);
     edgeList.push_back(song);
 
     firstArtist.addEdge(song);
@@ -43,9 +45,9 @@ bool Graph::checkIfEdgeExists(Vertex& firstArtist, Vertex& secondArtist, string 
     vector<Edge> firstArtistSongs = getIncidentEdges(firstArtist);
 
     for (Edge song : firstArtistSongs) {
-        std::pair<Vertex, Vertex> songArtists = song.getArtists();
-        if (song.getId() == songID && ((songArtists.first.getName() == firstArtist.getName() && songArtists.second.getName() == secondArtist.getName()) 
-            || (songArtists.first.getName() == secondArtist.getName() && songArtists.second.getName() == firstArtist.getName()))) {
+        std::pair<std::string, std::string> songArtists = song.getArtistIDs();
+        if (song.getId() == songID && ((vertexList[songArtists.first].getName() == firstArtist.getName() && vertexList[songArtists.second].getName() == secondArtist.getName()) 
+            || (vertexList[songArtists.first].getName() == secondArtist.getName() && vertexList[songArtists.second].getName() == firstArtist.getName()))) {
             return true;
         }
     }
