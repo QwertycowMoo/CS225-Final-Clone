@@ -6,7 +6,7 @@
 
 class Vertex {
     public:
-        Vertex(std::string id, std::string name);
+        Vertex(const std::string& id, const std::string& name);
 
     // *** Helper functions ***
         // getter
@@ -17,7 +17,7 @@ class Vertex {
         void setId(std::string id);
         void setName(std::string name);
         
-        void addEdge(Edge& song);
+        void addEdge(const Edge* song);
 
         void print();
 
@@ -29,5 +29,5 @@ class Vertex {
         // the artist's name
         std::string name_;
 
-        std::vector<Edge> adjacencyList;
+        std::vector<Edge*> adjacencyList;
 };

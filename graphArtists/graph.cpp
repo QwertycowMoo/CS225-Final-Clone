@@ -7,6 +7,12 @@ Graph::Graph() {
 
 }
 
+Graph::~Graph() {
+    for (map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
+        delete it->second;
+    }
+}
+
 /**
  * Checks the vertex list for vertexes with the current artist. If so, returns a reference to that vertex.
  * Otherwise, it will create a new vertex and add it to the vertex list.

@@ -7,7 +7,7 @@
 #include <vector>
 
 int main(int argc, char** argv) {
-    vector<vector<string>> data = CSVParser::parseCSV("artist_connections.csv");
+    vector<vector<string>> data = CSVParser::parseCSV("small_test.csv");
 
     Graph g = CSVParser::dataToGraph(data);
     //data is currently all strings, will need to

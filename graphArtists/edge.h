@@ -5,6 +5,7 @@
 #include <vector>
 
 using std::string;
+using std::pair;
 
 /**
  * Class representing a Song in the graph;
@@ -12,7 +13,7 @@ using std::string;
  */
 class Edge {
     public:
-        Edge(std::string artistID1, std::string artistID2, string id, string name, int length_ms);
+        Edge(const string& artistID1, const string& artistID2, const string& id, const string& name, int length_ms);
 
     // *** Helper functions ***
         // getter
@@ -27,10 +28,10 @@ class Edge {
 
         void print();
         string msToMinSecs(int ms);
-        std::pair<std::string, std::string> getArtistIDs();
+        pair<string, string> getArtistIDs();
     private:
         // The 2 artists listed on the song
-        std::pair<std::string, std::string> artistIDs;
+        pair<string, string> artistIDs;
         // The song ID, (unique Spotify string)
         string id_;
         // The song name, (common title)
