@@ -8,7 +8,7 @@ Vertex::Vertex(std::string id, std::string name) {
     id_ = id;
     name_ = name;
     adjacencyList = std::vector<Edge>();
-};
+}
 
 /**
  * @return the artist's ID

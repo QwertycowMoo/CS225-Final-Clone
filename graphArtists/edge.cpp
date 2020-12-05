@@ -3,7 +3,7 @@
 
 using std::string;
 
-Edge::Edge(std::string artistID1, std::string artistID2, string id, string name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {
+Edge::Edge(string artistID1, string artistID2, string id, string name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {
     artistIDs = std::make_pair(artistID1, artistID2);
 }
 
@@ -66,6 +66,6 @@ string Edge::msToMinSecs(int ms) {
     return std::to_string(minutes) + "m " + std::to_string(secs) + "s";
 }
 
-std::pair<std::string, std::string> Edge::getArtistIDs() {
+std::pair<string, string> Edge::getArtistIDs() {
     return artistIDs;
 }
