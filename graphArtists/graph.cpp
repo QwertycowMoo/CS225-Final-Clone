@@ -9,7 +9,7 @@ Graph::Graph() {
 }
 
 Graph::~Graph() {
-    for (map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
+    for (unordered_map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
         delete it->second;
     }
 

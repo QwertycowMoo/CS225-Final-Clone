@@ -36,6 +36,6 @@ class Graph {
         
         bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
     private:
-        map<string, Vertex*> vertexList; // maps artist id to vertex
+        unordered_map<string, Vertex*> vertexList; // maps artist id to vertex
         vector<Edge*> edgeList; // linked list of edges
 };
