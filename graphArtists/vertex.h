@@ -1,16 +1,33 @@
 #pragma once
 
+#include "edge.h"
 #include <string>
-
-using std::string;
+#include <list>
 
 class Vertex {
     public:
-        Vertex(string id, string name);
-        string getId();
-        string getName(); 
+        Vertex(const std::string& id, const std::string& name);
+
+    // *** Helper functions ***
+        // getter
+        std::string getId();
+        std::string getName();
+
+        // setter
+        void setId(std::string id);
+        void setName(std::string name);
+        
+        void addEdge(const Edge* song);
+
+        void print();
+
+        std::vector<Edge> getEdges();
 
     private:
-        string id_;
-        string name_;
+        // the artist's ID (unique Spotify string)
+        std::string id_;
+        // the artist's name
+        std::string name_;
+
+        std::vector<Edge*> adjacencyList;
 };
