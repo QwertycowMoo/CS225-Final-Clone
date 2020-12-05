@@ -19,6 +19,8 @@ class Vertex {
         
         void addEdge(Edge& song);
 
+        void print();
+
         std::vector<Edge> getEdges();
 
     private:

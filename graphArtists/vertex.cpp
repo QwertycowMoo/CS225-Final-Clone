@@ -1,4 +1,5 @@
 #include "vertex.h"
+#include <iostream>
 
 /**
  * Constructor for Vertex class
@@ -45,4 +46,8 @@ std::vector<Edge> Vertex::getEdges() {
 
 void Vertex::addEdge(Edge& song) {
     adjacencyList.push_back(song);
+}
+
+void Vertex::print() {
+    std::cout << name_ << std::endl;
 }
