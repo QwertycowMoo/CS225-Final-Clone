@@ -11,10 +11,9 @@ void Graph::InsertVertex(Vertex v) {
     vertexList.insert(std::make_pair(v, 0));
 }
 
-bool Graph::InsertEdge(Vertex source, Vertex dest, Edge label) {
+bool Graph::InsertEdge(Vertex source, Vertex dest, Edge edge) {
+    edgeList.push_back(edge);
     Edge* newEdge = new Edge(label);
-    
-
 }
 
 void Graph::RemoveVertex(Vertex v) {

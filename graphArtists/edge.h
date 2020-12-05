@@ -12,7 +12,7 @@ using std::string;
  */
 class Edge {
     public:
-        Edge(string id, string name, int length_ms);
+        Edge(Vertex artist1, Vertex artist2, string id, string name, int length_ms);
         Edge(string id, string name);
 
     // *** Helper functions ***
@@ -29,12 +29,12 @@ class Edge {
         void print();
         string msToMinSecs(int ms);
     private:
+        // The 2 artists listed on the song
+        std::pair<Vertex, Vertex> artists;
         // The song ID, (unique Spotify string)
         string id_;
         // The song name, (common title)
         string name_;
         // The length of the song, (milliseconds)
         int length_ms_;
-
-        std::list<Edge*>* adjacencyList;
 };

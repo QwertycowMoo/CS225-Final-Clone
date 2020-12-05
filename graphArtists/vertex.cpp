@@ -3,7 +3,9 @@
 /**
  * Constructor for Vertex class
  */ 
-Vertex::Vertex(string id, string name):id_(id), name_(name){};
+Vertex::Vertex(string id, string name):id_(id), name_(name){
+    adjacencyList = std::list<Edge>();
+};
 
 /**
  * @return the artist's ID
