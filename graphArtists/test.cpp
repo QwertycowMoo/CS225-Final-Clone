@@ -6,9 +6,10 @@
 #include <list>
 #include <vector>
 
-void basicGraphTest() {
-    vector<vector<string>> data = CSVParser::parseCSV("small_test.csv");
+void basicGraphTest(string filename) {
+    vector<vector<string>> data = CSVParser::parseCSV(filename);
 
+    //Expected Output for small_test.csv
     Graph g = CSVParser::dataToGraph(data);
     //data is currently all strings, will need to
     std::vector<Vertex*> artists = g.getAllVertices();
@@ -38,32 +39,41 @@ void basicGraphTest() {
     std::vector<Edge> songs = g.getAllEdges();
     std::cout << "All songs in graph:" << std::endl;
     for (Edge e : songs) {
-        std::cout << e.getArtistIDs().first << " " << e.getName() << " " << e.getArtistIDs().second << std::endl;
+        std::cout << e.getArtistIDs().first << " " << e.getName() << " " << e.getArtistIDs().second << " " << e.getLength() << std::endl;
     }
     std::cout << std::endl;
 
 }
 
-void dijkstraTest() {
-    vector<vector<string>> data = CSVParser::parseCSV("dijkstra_test.csv");
+void dijkstraTest(string filename) {
+    std::cout << "parsing csv...";
+    vector<vector<string>> data = CSVParser::parseCSV(filename);
+
+    std::cout << "done!" << std::endl;
+    std::cout << "Turning csv into graph...";
     Graph g = CSVParser::dataToGraph(data);
+    std::cout << "done!" << std::endl;
+
 
     std::vector<Vertex*> artists = g.getAllVertices();
 
     Dijkstra dijk;
-    std::vector<Edge*> = dijk.shortestPath(g, *artists[0], *artists[1]);
-
+    std::cout << "performing Dijkstra's...";
+    artists[0]->print();
+    std::vector<Edge*> path = dijk.shortestPath(g, artists[0], artists[1]);
+    std::cout << "done!" << std::endl;
     artists[0]->print();
     artists[1]->print();
 
-    for (Edge* e : songs) {
+    for (Edge* e : path) {
         std::cout << e->getArtistIDs().first << " " << e->getName() << " " << e->getArtistIDs().second << std::endl;
     }
 
 
 }
 int main(int argc, char** argv) {
-   dijkstraTest();
+    basicGraphTest("dijkstra_test.csv");
+    dijkstraTest("dijkstra_test.csv");
     return 0;
 }
 

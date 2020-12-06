@@ -53,7 +53,7 @@ void Edge::setLength(int length_ms) {
  * Prints all data related to the edge
  */
 void Edge::print() {
-    std::cout << "Name: " << name_ << " | Id: " << id_ << " | Length: " << msToMinSecs(length_ms_) << std::endl;
+    std::cout << "Name: " << name_ << " | Id: " << id_ << " | Length: " << msToMinSecs(getLength()) << std::endl;
 }
 
 /**

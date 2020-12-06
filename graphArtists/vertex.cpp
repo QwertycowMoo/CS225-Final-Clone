@@ -38,7 +38,7 @@ void Vertex::setName(std::string name) {
     name_ = name;
 }
 
-std::vector<Edge*> Vertex::getEdges() {
+std::vector<Edge*> Vertex::getEdges() const{
     return adjacencyList;
 }
 
@@ -48,4 +48,15 @@ void Vertex::addEdge(Edge* song) {
 
 void Vertex::print() {
     std::cout << name_ << std::endl;
+}
+
+bool Vertex::operator==(const Vertex& other) const {
+    if (name_ == other.getName()) {
+        if (id_ == other.getId()) {
+            if (adjacencyList == other.getEdges()) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

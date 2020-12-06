@@ -35,11 +35,14 @@ class Vertex {
          * gets all the edges in the adjacency list of this vertex
          * @return vector of all adjacent edges
          * */
-        std::vector<Edge*> getEdges();
+        std::vector<Edge*> getEdges() const;
 
         /**@TODO 
          * = constructor and copy constructor
          * */
+
+        bool operator==(const Vertex& other) const;
+    
 
     private:
         // the artist's ID (unique Spotify string)
