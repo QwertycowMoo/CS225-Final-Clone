@@ -2,36 +2,96 @@
 #include "graph.h"
 
 #include <unordered_map>
+#include <iostream>
 
 Graph::Graph() {
 
 }
 
-void Graph::InsertVertex(Vertex v) {
-    
-}
+Graph::~Graph() {
+    for (unordered_map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
+        delete it->second;
+    }
 
-void Graph::RemoveVertex(Vertex v) {
-    
+    for (Edge* e : edgeList) {
+        delete e;
+    }
 }
-
-// BFS/Landmark material
 
 /**
- * Traverses the graph using Breadth-First Search.
- */ 
-void BFS(Vertex v) {
+ * Checks the vertex list for vertexes with the current artist. If so, returns a reference to that vertex.
+ * Otherwise, it will create a new vertex and add it to the vertex list.
+ */
+Vertex* Graph::insertVertex(const string& id, const string& artistName) {
+    if (vertexList.find(id) != vertexList.end()) {
+        return vertexList[id];
+    }
+    
+    Vertex* artist = new Vertex(id, artistName);
+    vertexList.insert(std::make_pair(id, artist));
 
+    return artist;
 }
 
-void landMark() {
+/**
+ * Loops through both artists to ensure that there isn't already an edge between the two artists for the
+ * same song. If not, construct an edge and add it to the edge list. Then, add the edge to the list of
+ * edges held in each vertex.
+ */
+bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songID, string songTitle, int songLength) {
+    if (checkIfEdgeExists(firstArtist, secondArtist, songID)) {
+        return false;
+    }
 
+    Edge* song = new Edge(firstArtist->getId(), secondArtist->getId(), songID, songTitle, songLength);
+    edgeList.push_back(song);
+
+    firstArtist->addEdge(song);
+    secondArtist->addEdge(song);
+
+    return true;
 }
 
-Edge getEdge(Vertex v) {
+bool Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID) {
+    vector<Edge> firstArtistSongs = getIncidentEdges(firstArtist);
 
+    for (Edge song : firstArtistSongs) {
+        std::pair<std::string, std::string> songArtists = song.getArtistIDs();
+        
+        if (song.getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && vertexList[songArtists.second]->getName() == secondArtist->getName()) 
+            || (vertexList[songArtists.first]->getName() == secondArtist->getName() && vertexList[songArtists.second]->getName() == firstArtist->getName()))) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
+vector<Vertex*> Graph::getAllVertices() {
+    vector<Vertex*> artists;
+
+    for (std::pair<string, Vertex*> cur : vertexList) {
+        artists.push_back(cur.second);
+    }
+
+    return artists;
+}
+
+vector<Edge> Graph::getAllEdges() {
+    vector<Edge> edges;
+    for (Edge* e : edgeList) {
+        edges.push_back(*e);
+    }
+    return edges;
+}
+
+vector<Edge> Graph::getIncidentEdges(Vertex* v) {
+    vector<Edge> edges;
+    for (Edge* e : v->getEdges()) {
+        edges.push_back(*e);
+    }
+    return edges;
+}
 
 
 

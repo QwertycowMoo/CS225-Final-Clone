@@ -1,10 +1,11 @@
 #include "edge.h"
 #include <iostream>
 
-using std::string;
+//using std::string;
 
-Edge::Edge(string id, string name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {};
-Edge::Edge(string id, string name) : id_(id), name_(name) {length_ms_ = 0; };
+Edge::Edge(const string& artistID1, const string& artistID2, const string& id, const string& name, int length_ms) : id_(id), name_(name), length_ms_(length_ms) {
+    artistIDs = std::make_pair(artistID1, artistID2);
+}
 
 /**
  * @return The song ID (unique string)
@@ -63,4 +64,8 @@ string Edge::msToMinSecs(int ms) {
     int minutes = ms % (1000 * 60);
     int secs = ms - (minutes * 60 * 1000);
     return std::to_string(minutes) + "m " + std::to_string(secs) + "s";
+}
+
+pair<string, string> Edge::getArtistIDs() {
+    return artistIDs;
 }
