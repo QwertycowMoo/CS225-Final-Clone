@@ -13,19 +13,22 @@ int main(int argc, char** argv) {
     //data is currently all strings, will need to
     std::vector<Vertex*> artists = g.getAllVertices();
 
-    std::cout << "All artists in graph:";
-    for (Vertex* v : artists) {
-        std::cout << v->getName();
+    std::cout << "All artists in graph: ";
+    for (unsigned i = 0; i < artists.size() - 1; i++) {
+        std::cout << artists[i]->getName() << ", ";
     }
-    std::cout << std::endl;
+    std::cout << artists[artists.size() - 1] << std::endl;
 
-    std::vector<Edge> songs = g.getAllEdges();
-    std::cout << "All songs in graph:";
-    for (Edge e : songs) {
-        std::cout << e.getName();
-    }
-    std::cout << std::endl;
+    //std::vector<Edge> songs = g.getAllEdges();
+    // std::cout << "All songs in graph:";
+    // for (Edge e : songs) {
+    //     std::cout << e.getName();
+    // }
+    // std::cout << std::endl;
 
-    std::cout << "This ran!" << std::endl;
+    //std::cout << songs.size() << std::endl;
+
+    g.BFS();
+
     return 0;
 }

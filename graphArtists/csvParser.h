@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <stdlib.h>
 
-
+#include <iostream>
 
 #include "edge.h"
 #include "graph.h"

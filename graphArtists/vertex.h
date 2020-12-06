@@ -42,6 +42,6 @@ class Vertex {
         std::string id_;
         // the artist's name
         std::string name_;
-
+        // list of edges which contain the artist as a vertex.
         std::vector<Edge*> adjacencyList;
 };

@@ -93,5 +93,53 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) {
     return edges;
 }
 
+void Graph::BFS() {
+    BFS(0);
+}
 
+void Graph::BFS(unsigned index) {
+    vector<Vertex*> artistsVect = getAllVertices(); // stores vertices of all artists
+    if (index < vertexList.size()) {
+        // visitation bool array
+        bool *visit = new bool[artistsVect.size()]; // runs parallel with artistsVect
+        for (unsigned i = 0; i < artistsVect.size(); i++) {
+            visit[i] = false;
+        }
 
+        // vector of vertices
+        std::vector<Vertex*> vertices = getAllVertices();
+
+        // queue for BFS
+        list<Vertex*> queue;
+
+        // queue up first vertex
+        visit[index] = true;
+        queue.push_back(vertices[index]);
+
+        while (!queue.empty()) {
+            // dequeue front most vertex
+            Vertex* v = queue.front();
+            queue.pop_front();
+
+            // print vertex data
+            v->print();
+
+            // get adjacent vertices using edgeList
+            std::vector<Edge*> adjList = v->getEdges();
+            for (auto it = adjList.begin(); it != adjList.end(); it++) {
+                std::pair<string, string> ids = (*it)->getArtistIDs();
+                string v1 = ids.first;
+                string v2 = ids.second;
+                if (v1 == v->getId()) { // v1 is the artist, so try to add v2 to queue
+                    if (!visit["idx"]) {
+                        queue.push_back("v2");
+                    }
+                } else { // v2 is the artist, so try to add v1 to queue
+                    if (!visit["idx"]) {
+                        queue.push_back("v1");
+                    }
+                }
+            }
+        }
+    }
+}

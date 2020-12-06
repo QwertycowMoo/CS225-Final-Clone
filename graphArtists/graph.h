@@ -75,6 +75,19 @@ class Graph {
          * */
         bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
 
+
+        /**
+         * performs a call to BFS(int index) with the index defaulted to 0,
+         * this will likely be called since the database is based on index 0 of vertexList
+         */
+        void BFS();
+
+        /**
+         * performs a breadth-first search of the graph object
+         * @param index index of the vertex to start the traversal from
+         */
+        void BFS(unsigned index);
+
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex
         vector<Edge*> edgeList; // linked list of edges

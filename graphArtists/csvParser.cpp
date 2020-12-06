@@ -33,6 +33,8 @@ vector<vector<string>> CSVParser::parseCSV(string filename) {
 
 Graph CSVParser::dataToGraph(vector<vector<string>>& data) {
     Graph g;
+    // bool for adding degree 0 artist
+    bool deg_zero = false;
     for (vector<string> v : data) {
         if (v[0] == "Id1") {
             continue;
