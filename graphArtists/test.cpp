@@ -1,7 +1,7 @@
 #include "csvParser.h"
 #include "graph.h"
 #include "edge.h"
-
+#include "dijkstra.h"
 #include <iostream>
 #include <list>
 #include <vector>

@@ -37,6 +37,14 @@ class Vertex {
          * */
         std::vector<Edge*> getEdges();
 
+        /**@TODO
+         * == operator
+         * */
+
+        /**@TODO 
+         * = constructor and copy constructor
+         * */
+
     private:
         // the artist's ID (unique Spotify string)
         std::string id_;

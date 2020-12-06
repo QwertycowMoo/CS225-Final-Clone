@@ -93,5 +93,8 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) {
     return edges;
 }
 
+Vertex* Graph::findVertex(string id) {
+    return &vertexList[id];
+}
 
 

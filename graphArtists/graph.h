@@ -75,6 +75,10 @@ class Graph {
          * */
         bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
 
+        /**@TODO
+         * gives a pointer to the vertex given the id, basically a search
+         * */
+        Vertex* findVertex(string id);
 
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex
