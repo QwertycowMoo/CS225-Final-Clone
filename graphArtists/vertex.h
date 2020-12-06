@@ -13,8 +13,8 @@ class Vertex {
         Vertex(const std::string& id, const std::string& name);
 
         // getter
-        std::string getId();
-        std::string getName();
+        std::string getId() const;
+        std::string getName() const;
 
         // setter
         void setId(std::string id);
@@ -36,10 +36,6 @@ class Vertex {
          * @return vector of all adjacent edges
          * */
         std::vector<Edge*> getEdges();
-
-        /**@TODO
-         * == operator
-         * */
 
         /**@TODO 
          * = constructor and copy constructor

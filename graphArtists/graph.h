@@ -51,7 +51,7 @@ class Graph {
          * gets all vertices in our graph
          * @return vector of pointers of all our vertices
          * */
-        vector<Vertex*> getAllVertices();
+        vector<Vertex*> getAllVertices() const;
 
         /**
          * gets all edges in our graph
@@ -64,7 +64,7 @@ class Graph {
          * @param v pointer to the vertex that we want the incident edges of
          * @return vector of all the edges that come from this vertex
          * */
-        vector<Edge> getIncidentEdges(Vertex* v);
+        vector<Edge> getIncidentEdges(Vertex* v) const;
         
         /**
          * checks whether the edge exists
@@ -73,12 +73,13 @@ class Graph {
          * @param songID song's Spotify ID
          * @return whether or not the edge exists in our graph
          * */
-        bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
+        Edge* checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
 
-        /**@TODO
-         * gives a pointer to the vertex given the id, basically a search
+        /**@TODO, test for functionality
+         * gives a vertex given the id, basically a search
          * */
         Vertex* findVertex(string id);
+
 
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex

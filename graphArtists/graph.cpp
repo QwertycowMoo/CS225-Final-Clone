@@ -52,22 +52,23 @@ bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songID,
     return true;
 }
 
-bool Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID) {
-    vector<Edge> firstArtistSongs = getIncidentEdges(firstArtist);
+//O(deg(v))
+Edge* Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID){
+    //vector<Edge> firstArtistSongs = getIncidentEdges(firstArtist);
 
-    for (Edge song : firstArtistSongs) {
-        std::pair<std::string, std::string> songArtists = song.getArtistIDs();
+    for (Edge* song : firstArtist->getEdges()) {
+        std::pair<std::string, std::string> songArtists = song->getArtistIDs();
         
-        if (song.getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && vertexList[songArtists.second]->getName() == secondArtist->getName()) 
+        if (song->getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && vertexList[songArtists.second]->getName() == secondArtist->getName()) 
             || (vertexList[songArtists.first]->getName() == secondArtist->getName() && vertexList[songArtists.second]->getName() == firstArtist->getName()))) {
-            return true;
+            return song;
         }
     }
 
-    return false;
+    return nullptr;
 }
 
-vector<Vertex*> Graph::getAllVertices() {
+vector<Vertex*> Graph::getAllVertices() const{
     vector<Vertex*> artists;
 
     for (std::pair<string, Vertex*> cur : vertexList) {
@@ -85,7 +86,7 @@ vector<Edge> Graph::getAllEdges() {
     return edges;
 }
 
-vector<Edge> Graph::getIncidentEdges(Vertex* v) {
+vector<Edge> Graph::getIncidentEdges(Vertex* v) const {
     vector<Edge> edges;
     for (Edge* e : v->getEdges()) {
         edges.push_back(*e);
@@ -94,7 +95,7 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) {
 }
 
 Vertex* Graph::findVertex(string id) {
-    return &vertexList[id];
+    return vertexList[id];
 }
 
 

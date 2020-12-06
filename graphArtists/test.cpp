@@ -6,7 +6,7 @@
 #include <list>
 #include <vector>
 
-int main(int argc, char** argv) {
+void basicGraphTest() {
     vector<vector<string>> data = CSVParser::parseCSV("small_test.csv");
 
     Graph g = CSVParser::dataToGraph(data);
@@ -39,9 +39,31 @@ int main(int argc, char** argv) {
     std::cout << "All songs in graph:" << std::endl;
     for (Edge e : songs) {
         std::cout << e.getArtistIDs().first << " " << e.getName() << " " << e.getArtistIDs().second << std::endl;
-
     }
     std::cout << std::endl;
 
+}
+
+void dijkstraTest() {
+    vector<vector<string>> data = CSVParser::parseCSV("dijkstra_test.csv");
+    Graph g = CSVParser::dataToGraph(data);
+
+    std::vector<Vertex*> artists = g.getAllVertices();
+
+    Dijkstra dijk;
+    std::vector<Edge*> = dijk.shortestPath(g, *artists[0], *artists[1]);
+
+    artists[0]->print();
+    artists[1]->print();
+
+    for (Edge* e : songs) {
+        std::cout << e->getArtistIDs().first << " " << e->getName() << " " << e->getArtistIDs().second << std::endl;
+    }
+
+
+}
+int main(int argc, char** argv) {
+   dijkstraTest();
     return 0;
 }
+
