@@ -73,7 +73,7 @@ void dijkstraTest(string filename) {
 }
 int main(int argc, char** argv) {
     basicGraphTest("dijkstra_test.csv");
-    dijkstraTest("dijkstra_test.csv");
+    dijkstraTest("artist_connections.csv");
     return 0;
 }
 

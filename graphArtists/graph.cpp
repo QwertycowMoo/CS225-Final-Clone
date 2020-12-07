@@ -95,7 +95,8 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) const {
 }
 
 Vertex* Graph::findVertex(string id) {
-    return vertexList[id];
+    //if vertex exists since this would create a new vertex in the hashmap i think
+    return (vertexList.find(id))->second;
 }
 
 
