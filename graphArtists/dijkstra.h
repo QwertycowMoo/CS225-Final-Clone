@@ -37,10 +37,11 @@ class Dijkstra {
                 vertex = v;
             }
             bool operator<(const pqObj other) const {
-                return length < other.length;
+                return other.length < length;
             }
         };
 
+        //Custom hash function for the vertex object
         struct VertexHash
         {
             std::size_t operator()(const Vertex& v) const

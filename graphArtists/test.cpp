@@ -60,10 +60,10 @@ void dijkstraTest(string filename) {
     Dijkstra dijk;
     std::cout << "performing Dijkstra's...";
     artists[0]->print();
-    std::vector<Edge*> path = dijk.shortestPath(g, artists[0], artists[1]);
-    std::cout << "done!" << std::endl;
-    artists[0]->print();
-    artists[1]->print();
+    std::vector<Edge*> path = dijk.shortestPath(g, artists[2], artists[4]);
+    std::cout << "done!" << std::endl << std::endl ;
+    artists[2]->print();
+    artists[4]->print();
 
     for (Edge* e : path) {
         std::cout << e->getArtistIDs().first << " " << e->getName() << " " << e->getArtistIDs().second << std::endl;

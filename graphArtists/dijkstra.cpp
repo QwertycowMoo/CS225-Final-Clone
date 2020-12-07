@@ -41,14 +41,13 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
     for (Vertex* v : g.getAllVertices()) {
         //get smallest path length vertex
         //we're using a map which is sorted, so we can do this in less time because we're just gonna take the first item not visited
-        std::cout << queue.size() << std::endl;
-        std::cout << "queue snippet" << std::endl;
         pqObj queueObject = queue.top();
         queue.pop();
         Vertex* min_ptr = queueObject.vertex;
         Vertex min = *min_ptr;
         std::cout << "----------------" << std::endl;
         min.print();
+        std::cout << queueObject.length <<std::endl;
         std::cout << "----------------" << std::endl;
         //find a vertex that we have not visited yet
         while (visited.find(min) != visited.end()) {
@@ -71,7 +70,7 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
         //since we dereferenced a pointer to a Vertex, the map Vertex objects should have its adjacency list as well
         vector<Edge*> adj = min.getEdges(); 
 
-        std::cout << "going through the adj edges:" << std::endl;
+        std::cout << "going through the adj edges of size " << adj.size() << ":" << std::endl;
         for (Edge* e : adj) {
             e->print();
             std::cout << e->getLength() << std::endl;
@@ -91,21 +90,21 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
                 //update
                 distances[*toUpdate] = e->getLength() + precPathLen;
                 //doing this instead of just min because min will be deleted while the graph will stay
-                predObj* p = new predObj(e->getId(), result.findVertex(min.getId()));
+                std::cout << g.findVertex(min.getId())->getName() << std::endl;
+                predObj* p = new predObj(e->getId(), g.findVertex(min.getId()));
                 pred[*toUpdate] = p;
             }
 
             //then add the updated vertex to the queue to be processed
-            std::cout << "adding to queue" << std::endl;
             if (visited.find(*toUpdate) == visited.end()) {
+                std::cout << "adding to the queue: ";
+                 toUpdate->print();
                 queue.push(pqObj(toUpdate, distances[*toUpdate]));
             }
             
         }
-        std::cout << "done with adj edges" << std::endl;
         //we visited this node, add to visited set
         visited.insert(min); 
-        std::cout << "inserted into set" << std::endl;
     }
     
 }
@@ -120,7 +119,11 @@ vector<Edge*> Dijkstra::shortestPath(Graph& g, Vertex* source, Vertex* dest) {
     Vertex* v = dest;
     while(pred[*v]) {
         Vertex* pre = pred[*v]->prev;
+        v->print();
+        pre->print();
+        
         Edge* e = g.checkIfEdgeExists(pre, v, pred[*v]->songId); //change checkIfEdgeExists to an Edge pointer
+        e->print();
         path.push_back(e);
         v = pred[*v]->prev;
     }
