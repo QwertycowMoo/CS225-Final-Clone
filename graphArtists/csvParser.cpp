@@ -1,4 +1,3 @@
-
 #include "csvParser.h"
 
 vector<vector<string>> CSVParser::parseCSV(string filename) {

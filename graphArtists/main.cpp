@@ -10,9 +10,8 @@ int main(int argc, char** argv) {
     vector<vector<string>> data = CSVParser::parseCSV("small_test.csv");
 
     Graph g = CSVParser::dataToGraph(data);
-    //data is currently all strings, will need to
-    std::vector<Vertex*> artists = g.getAllVertices();
 
+    std::vector<Vertex*> artists = g.getAllVertices();
     std::cout << "All artists in graph:";
     for (Vertex* v : artists) {
         std::cout << v->getName();

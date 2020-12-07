@@ -24,14 +24,14 @@ class Graph {
         /**
          * Default constructor
          */
-        Graph();
+        Graph() = default;
         ~Graph();
 
         /**
-         * inserts a vertex into our hashmap
+         * inserts a vertex into our hashmap if it doesn't exist
          * @param artistName name of the artist
          * @param id artist's Spotify ID
-         * @return the pointer to the vertex added
+         * @return the pointer to the vertex added, or a pointer to the vertex with the exisitng id
          * */
         Vertex* insertVertex(const string& artistName, const string& id);
 
@@ -67,7 +67,8 @@ class Graph {
         vector<Edge> getIncidentEdges(Vertex* v) const;
         
         /**
-         * checks whether the edge exists
+         * checks whether the edge exists, in O(deg(v)).
+         * Since the graph is undirected, it the order of the artists does not matter
          * @param firstArtist vertex pointer to the source artist
          * @param secondArtist vertex point to the destination artist
          * @param songID song's Spotify ID
@@ -79,7 +80,6 @@ class Graph {
          * gives a vertex given the id, basically a search
          * */
         Vertex* findVertex(string id);
-
 
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex
