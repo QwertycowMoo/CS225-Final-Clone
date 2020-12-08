@@ -36,11 +36,15 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
     queue.push(pqObj(source, 0));
     //graph that will result in the full dijkstra SSSP tree
 
-
+    int i = 0;
     std::cout << "Dijkstra setup done" << std::endl;
+    
     for (Vertex* v : g.getAllVertices()) {
         //get smallest path length vertex
         //we're using a map which is sorted, so we can do this in less time because we're just gonna take the first item not visited
+        if (queue.empty()) {
+            break;
+        }
         pqObj queueObject = queue.top();
         queue.pop();
         Vertex* min_ptr = queueObject.vertex;
@@ -67,20 +71,23 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
         //since we dereferenced a pointer to a Vertex, the map Vertex objects should have its adjacency list as well
         vector<Edge*> adj = min.getEdges(); 
 
-        std::cout << "going through the adj edges of size " << adj.size() << ":" << std::endl;
-        min.print();
+        // std::cout << "going through the adj edges of size " << adj.size() << ":" << std::endl;
+        // min.print();
         for (Edge* e : adj) {
             // e->print();
-            //std::cout << e->getLength() << std::endl;
-            Vertex* toUpdate;
+            // std::cout << e->getLength() << std::endl;
+            Vertex* toUpdate = nullptr;
 
             if (g.findVertex(e->getArtistIDs().second) == min_ptr) {
                 toUpdate = g.findVertex(e->getArtistIDs().first);
-            } else {
+            } else if (g.findVertex(e->getArtistIDs().first) == min_ptr) {
                 toUpdate = g.findVertex(e->getArtistIDs().second);
-            }
+            } 
            
-
+            if (toUpdate == nullptr) {
+                // std::cout << "nullptr" << std::endl;
+                continue;
+            }
             //find length of path preceeding this edge
             int precPathLen = distances[min];
 
@@ -92,7 +99,6 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
                 predObj* p = new predObj(e->getId(), g.findVertex(min.getId()));
                 pred[*toUpdate] = p;
             }
-
             //then add the updated vertex to the queue to be processed
             if (visited.find(*toUpdate) == visited.end()) {
                 // std::cout << "adding to the queue: ";
@@ -102,7 +108,11 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
             
         }
         //we visited this node, add to visited set
-        visited.insert(min); 
+        if (visited.find(min) == visited.end()) {
+            visited.insert(min); 
+        }
+        
+       
     }
     
 }
@@ -110,6 +120,10 @@ void Dijkstra::performDijkstra(Graph& g, Vertex* source){
 //build the graph by going back through the predecessor keys
 vector<Edge*> Dijkstra::shortestPath(Graph& g, Vertex* source, Vertex* dest) {
     //make a check to see if the source or destination actually exists or since its a pointer it should already exist no?
+    if (source == nullptr || dest == nullptr) {
+        std::cout << "these vertices do not exist!" << std::endl;
+        return vector<Edge*>();
+    }
     performDijkstra(g, source);
 
     std::cout << "finding shortest path" << std::endl;

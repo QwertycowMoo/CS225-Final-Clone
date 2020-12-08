@@ -59,20 +59,21 @@ void dijkstraTest(string filename) {
 
     Dijkstra dijk;
     std::cout << "performing Dijkstra's...";
-    artists[0]->print();
-    std::vector<Edge*> path = dijk.shortestPath(g, artists[2], artists[4]);
-    std::cout << "done!" << std::endl << std::endl ;
-    artists[2]->print();
-    artists[4]->print();
+    
+    //finds path between Met and Ty
+    std::vector<Edge*> path = dijk.shortestPath(g, g.findVertex("66CXWjxzNUsdJxJ2JdwvnR"), g.findVertex("50JJSqHUf2RQ9xsHs0KMHg"));
+    std::cout << "done!" << std::endl << std::endl;
 
+    g.findVertex("66CXWjxzNUsdJxJ2JdwvnR")->print();
+    std::cout << "to" << std::endl;
+    g.findVertex("50JJSqHUf2RQ9xsHs0KMHg")->print();
     for (Edge* e : path) {
-        std::cout << e->getArtistIDs().first << " " << e->getName() << " " << e->getArtistIDs().second << std::endl;
+        std::cout << g.findVertex(e->getArtistIDs().first)->getName() << " | " << e->getId() << " | " << e->getName() << " | " << g.findVertex(e->getArtistIDs().second)->getName() << std::endl;
     }
 
 
 }
 int main(int argc, char** argv) {
-    basicGraphTest("dijkstra_test.csv");
     dijkstraTest("artist_connections.csv");
     return 0;
 }
