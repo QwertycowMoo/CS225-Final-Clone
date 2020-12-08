@@ -6,15 +6,15 @@ The Vertices of the graph are Artists and the Edges represent songs that two Art
 
 # Creating your own CSV:
 The CSV is ordered in this order:
-`ArtistId1,ArtistName1,ArtistId2,ArtistName2,SongId,SongName,SongLengthinMilliSeconds`
+`ArtistId1,ArtistName1,ArtistId2,ArtistName2,SongId,SongName,SongLengthInMilliSeconds`
 ## To create your own CSV using the python script:
 The python file in SpotifyPython/SpotifyAPI is only a script. It requires the following packages to be installed in your local `venv`:  
 `pip install spotipy`  
 `pip install urllib3`  
 And the script has a line 112 `seed_artist_uri` that is currently set to Jacob Collier's Spotify URI.   
-    To find this URI, go into a Spotify application and find the artist that you want to seed. Click "Share" and "Copy Spotify URI"  
-    Paste this URI into the value for the seed_artist_uri  
-    The Script will then find the 500 closest artist to the seed artist  
+    * To find this URI, go into a Spotify application and find the artist that you want to seed. Click "Share" and "Copy Spotify URI"  
+    * Paste this URI into the value for the seed_artist_uri  
+    * The Script will then find the 500 closest artist to the seed artist  
 
 # Using the program
 This program runs through the command line
