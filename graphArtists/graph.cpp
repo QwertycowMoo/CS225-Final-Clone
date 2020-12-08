@@ -1,5 +1,10 @@
 
 #include "graph.h"
+#include <iostream>
+
+Graph::Graph() {
+    nameToIdMap = unordered_map<string, string>();
+}
 
 Graph::~Graph() {
     for (unordered_map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
@@ -18,6 +23,7 @@ Vertex* Graph::insertVertex(const string& id, const string& artistName) {
     
     Vertex* artist = new Vertex(id, artistName);
     vertexList.insert(std::make_pair(id, artist));
+    nameToIdMap.insert(std::make_pair(artistName, id));
 
     return artist;
 }
@@ -79,4 +85,16 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) const {
 
 Vertex* Graph::findVertex(string id) {
     return vertexList[id];
+}
+
+Vertex* Graph::findVertexFromName(string name) {
+    if (nameToIdMap.find(name) != nameToIdMap.end()) {
+        string id = nameToIdMap[name];
+        return vertexList[id];
+    }
+    return NULL;
+}
+
+string Graph::findNameFromID(string id) {
+    return vertexList[id]->getName();
 }

@@ -24,7 +24,7 @@ class Graph {
         /**
          * Default constructor
          */
-        Graph() = default;
+        Graph();
         ~Graph();
 
         /**
@@ -81,7 +81,12 @@ class Graph {
          * */
         Vertex* findVertex(string id);
 
+        Vertex* findVertexFromName(string name);
+
+        string findNameFromID(string id);
+
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex
         vector<Edge*> edgeList; // linked list of edges
+        unordered_map<string, string> nameToIdMap;
 };
