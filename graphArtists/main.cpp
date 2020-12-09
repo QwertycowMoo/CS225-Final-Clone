@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
         std::cout << " " << std::endl;
         std::cout << "Shortest path between " << sourceArtist << " and " << destinationArtist << std::endl;
         printPath(path, g);
-    } else if (argc == 5 && pathFlag == "-path=dijk") {
+    } else if (argc == 5 && pathFlag == "-path=bfs") {
         
     } else if (argc == 6) { // find landmark path between two artists
         LandmarkPath l;
