@@ -1,7 +1,7 @@
 WARNINGS=-pedantic -Wall -Werror -Wfatal-errors -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function
 
-main : main.o csvparser.o landmark.o
-	clang++ -std=c++11 main.cpp csvparser.o edge.o vertex.o graph.o dijkstra.o landmark.o $(WARNINGS) -o main
+spotigraph : main.o csvparser.o landmark.o
+	clang++ -std=c++11 main.cpp csvparser.o edge.o vertex.o graph.o dijkstra.o landmark.o $(WARNINGS) -o spotigraph
 test : test.o csvparser.o landmark.o
 	clang++ -std=c++11 test.cpp csvparser.o edge.o vertex.o graph.o dijkstra.o landmark.o $(WARNINGS) -o test
 test.o: test.cpp
