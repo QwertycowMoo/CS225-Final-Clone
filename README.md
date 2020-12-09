@@ -19,6 +19,12 @@ And the script has a line 112 `seed_artist_uri` that is currently set to Jacob C
 # Using the program
 This program runs through the command line.
 The executable name is `./spotigraph`. Make sure to cd into `\graphArtists`, run `make`, and determine your csv file path before you run any of the following commands.
+
+## To print a list of all artists in a csv file:
+`./spotigraph file.csv -a`
+Ex:
+`./spotigraph artist_connections.csv -a`
+
 ## To find a path between two artists using BFS:
 `./spotigraph "Source Artist Name" "Destination Artist Name" file.csv -path=bfs`  
 Ex:
