@@ -1,5 +1,6 @@
 
 #include "graph.h"
+#include <iostream>
 
 Graph::~Graph() {
     for (unordered_map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
