@@ -1,4 +1,5 @@
 #include "landmark.h"
+
 vector<Edge*> LandmarkPath::landmarkPath(Graph& g, Vertex* artist1, Vertex* landmarkArtist, Vertex* artist3){
     vector<Edge*> result;
     Dijkstra d;

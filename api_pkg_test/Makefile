@@ -1,9 +1,25 @@
 WARNINGS=-pedantic -Wall -Werror -Wfatal-errors -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function
 
-main : main.cpp spotify.o base64.o
-	clang++ main.cpp spotify.o base64.o $(WARNINGS) -std=c++11 -l curl -o main 
-spotify.o : spotify.cpp keys.h base64.h spotify.h
-	clang++ -c spotify.cpp $(WARNINGS) -std=c++11 -o spotify.o
-base64.o : base64.cpp base64.h
-	clang++ base64.cpp $(WARNINGS) 
-clean : rm main *.o
+main : main.o csvparser.o landmark.o
+	clang++ -std=c++11 main.cpp csvparser.o edge.o vertex.o graph.o dijkstra.o landmark.o $(WARNINGS) -o main
+test : test.o csvparser.o landmark.o
+	clang++ -std=c++11 test.cpp csvparser.o edge.o vertex.o graph.o dijkstra.o landmark.o $(WARNINGS) -o test
+test.o: test.cpp
+	clang++ -std=c++11 -c test.cpp $(WARNINGS) -o test.o
+main.o : main.cpp
+	clang++ -std=c++11 -c main.cpp $(WARNINGS) -o main.o
+landmark.o : landmark.cpp landmark.h dijkstra.o
+	clang++ -std=c++11 -c landmark.cpp $(WARNINGS) -o landmark.o
+dijkstra.o : dijkstra.cpp dijkstra.h graph.o
+	clang++ -std=c++11 -c dijkstra.cpp $(WARNINGS) -o dijkstra.o
+graph.o : graph.cpp graph.h edge.o vertex.o
+	clang++ -std=c++11 -c graph.cpp $(WARNINGS) -o graph.o
+csvparser.o : csvParser.cpp csvParser.h edge.o vertex.o
+	clang++ -std=c++11 -c csvParser.cpp $(WARNINGS) -o csvparser.o
+edge.o : edge.cpp edge.h
+	clang++ -std=c++11 -c edge.cpp $(WARNINGS) -o edge.o
+vertex.o : vertex.cpp vertex.h
+	clang++ -std=c++11 -c vertex.cpp $(WARNINGS) -o vertex.o
+
+clean : 
+	rm *.o
