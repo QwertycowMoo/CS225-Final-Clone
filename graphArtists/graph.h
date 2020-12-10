@@ -8,6 +8,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <unordered_set>
 
 using std::list;
 using std::unordered_map;
@@ -84,6 +85,20 @@ class Graph {
         Vertex* findVertexFromName(string name);
 
         string findNameFromID(string id);
+
+
+        /**
+         * performs a call to BFS(int index) with the index defaulted to the position of the artist's name in the VertexList
+         * this will likely be called since the traversal is based on the starting vertex
+         * @param name the name of the artist to begin the traversal at
+         */ 
+        list<Vertex*> BFS(string name);
+
+        /**
+         * performs a breadth-first search of the graph object
+         * @param index index of the vertex to start the traversal from
+         */
+        list<Vertex*> BFS(unsigned index);
 
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex

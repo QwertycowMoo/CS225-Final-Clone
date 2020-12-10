@@ -103,3 +103,70 @@ Vertex* Graph::findVertexFromName(string name) {
 string Graph::findNameFromID(string id) {
     return vertexList[id]->getName();
 }
+list<Vertex*> Graph::BFS(string name) {
+    vector<Vertex*> artists = getAllVertices();
+    string temp = "";
+    for (Vertex* v : artists) {
+        if (v->getName() == name) {temp = v->getId(); }
+    }
+    if (temp.empty()) {
+        std::cout << "No artist found.. :(" << std::endl;
+        return list<Vertex*>(); 
+    }
+    auto it = vertexList.find(temp);
+    unsigned index = distance(vertexList.begin(), it);
+    return BFS(index);
+}
+
+list<Vertex*> Graph::BFS(unsigned index) {
+    // vector of vertices
+    vector<Vertex*> artistsVect = getAllVertices(); // stores vertices of all artists
+    if (index >= artistsVect.size()) {return list<Vertex*>(); }
+        // keeps count of the total number of vertices
+        unsigned vertexCount = 1;
+
+        // visitation bools - initialized unordered map based on artist IDs.
+        unordered_map<Vertex*, bool> visited;
+        for (Vertex* v : artistsVect) {
+            visited.insert(std::pair<Vertex*, bool>(v, false));
+        }
+
+        // queue and return queue for BFS
+        list<Vertex*> queue;
+        list<Vertex*> returnQueue;
+
+        // queue up first vertex
+        queue.push_back(artistsVect[index]);
+        returnQueue.push_back(artistsVect[index]);
+        visited[artistsVect[index]] = true;
+
+        while (!queue.empty()) {
+            // dequeue front most vertex
+            Vertex* v = queue.front();
+            queue.pop_front();
+
+            // get adjacent vertices using edgeList
+            std::vector<Edge*> adjList = v->getEdges();
+            for (auto it = adjList.begin(); it != adjList.end(); it++) {
+                std::pair<string, string> ids = (*it)->getArtistIDs();
+                Vertex* v1 = vertexList[ids.first];
+                Vertex* v2 = vertexList[ids.second];
+                if (!visited.at(v1)) {
+                    queue.push_back(v1);
+                    returnQueue.push_back(v1);
+                    vertexCount++;
+                    visited[v1] = true; 
+                } 
+                if (!visited.at(v2)) {
+                    queue.push_back(v2);
+                    returnQueue.push_back(v2);
+                    vertexCount++; 
+                    visited[v2] = true; 
+                }
+                if (vertexCount == artistsVect.size()) {
+                    break;
+                }
+            }
+        }
+    return returnQueue;
+}
