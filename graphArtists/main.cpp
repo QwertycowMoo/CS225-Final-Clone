@@ -42,22 +42,52 @@ void printAllArtists(Graph& g) {
 // If the csv file doesn't load in properly, throw an error
 
 // 3 - ./spotigraph filename -a
+// 3 - ./spotigraph artist filepath -path=bfs
 // 5 - ./spotigraph artist1 artist2 filepath -path=bfs
 // 5 - ./spotigraph artist1 artist2 filepath -path=dijk
 // 6 - ./spotigraph artist1 artist2 artist3 filepath -path=landmark
 
 int main(int argc, char* argv[]) {
 
+    // handles printing out all artists
     if (argc == 3 && std::string(argv[2]).compare("-a") == 0) {
         std::string filePath = argv[1];
         vector<vector<string>> data = CSVParser::parseCSV(filePath);
         Graph g = CSVParser::dataToGraph(data);
 
         printAllArtists(g);
+        return 0;
     }
 
+    // handles printing a bfs traversal
+    if (argc == 4 && std::string(argv[3]).compare("-path=bfs") == 0) {
+        std::string artistName = argv[1];
+        std::string filePath = argv[2];
+        vector<vector<string>> data = CSVParser::parseCSV(filePath);
+        Graph g = CSVParser::dataToGraph(data);
+
+        std::vector<Vertex*> artists = g.getAllVertices();
+
+        unsigned count = 0;
+
+        std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" << std::endl << "BFS TRAVERSAL: " << std::endl;
+        list<Vertex*> traversal = g.BFS(artistName);
+        for (Vertex* v : traversal) {
+            if (count == artists.size() - 1) {
+                std::cout << v->getName() << ".";
+            } else {
+                std::cout << v->getName() << ", ";
+            }
+            count++;
+        }
+
+        std::cout << std::endl;
+        return 0;
+    }
+
+
     if (!(argc == 5 || argc == 6)) {
-        std::cerr << "Invalid number of command line arguments. Must be 5 or 6.";
+        std::cerr << "Invalid number of command line arguments.";
         return 1;
     }
 
@@ -68,11 +98,9 @@ int main(int argc, char* argv[]) {
     std::string pathFlag = argc == 5 ? argv[4] : "none";
 
     vector<vector<string>> data = CSVParser::parseCSV(filePath);
-
     Graph g = CSVParser::dataToGraph(data);
 
     // check to see if all input artists are in graph
-
     if (g.findVertexFromName(sourceArtist) == NULL) {
         std::cerr << sourceArtist << " does not exist in " << filePath << std::endl;
         return 1;
@@ -91,7 +119,7 @@ int main(int argc, char* argv[]) {
         std::cout << "Shortest path between " << sourceArtist << " and " << destinationArtist << std::endl;
         printPath(path, g);
     } else if (argc == 5 && pathFlag == "-path=bfs") {
-        
+        // TODO: Implement shortest path with BFS
     } else if (argc == 6) { // find landmark path between two artists
         LandmarkPath l;
         std::vector<Edge*> landmarkPath = l.landmarkPath(g, g.findVertexFromName(sourceArtist), g.findVertexFromName(landmarkArtist), g.findVertexFromName(destinationArtist));

@@ -25,10 +25,10 @@ The executable name is `./spotigraph`. Make sure to cd into `\graphArtists`, run
 Ex:
 `./spotigraph artist_connections.csv -a`
 
-## To find a path between two artists using BFS:
-`./spotigraph "Source Artist Name" "Destination Artist Name" file.csv -path=bfs`  
+## To print a BFS traversal of all artists in a csv file:
+`./spotigraph "Root Artist Name" file.csv -path=bfs`  
 Ex:
-`./spotigraph "Ariana Grande" "Jon Bellion" artist_connections.csv -path=bfs`  
+`./spotigraph "Ariana Grande" artist_connections.csv -path=bfs`  
 
 ## To find a path between two artists using Dijkstra's Algorithm:
 `./spotigraph "Source Artist Name" "Destination Artist Name" file.csv -path=dijk`  
