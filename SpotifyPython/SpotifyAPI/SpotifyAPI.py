@@ -109,8 +109,8 @@ def getAllData(seed_artist_uri):
     return data
 
 
-jacob_collier_uri = 'spotify:artist:0QWrMNukfcVOmgEU0FEDyD'
-all_data = getAllData(jacob_collier_uri)
+seed_artist_uri = 'spotify:artist:0QWrMNukfcVOmgEU0FEDyD' #Currently Jacob Collier
+all_data = getAllData(seed_artist_uri)
 
 pp.pprint(all_data)
 fields = ["Id1", "Name1", "Id2", "Name2", "IdSong", "NameSong", "SongLengthMS"]

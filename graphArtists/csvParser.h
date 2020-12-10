@@ -1,13 +1,11 @@
-
 #pragma once
+
 #include <fstream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <stdexcept>
 #include <stdlib.h>
-
-#include <iostream>
 
 #include "edge.h"
 #include "graph.h"

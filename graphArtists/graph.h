@@ -25,14 +25,14 @@ class Graph {
         /**
          * Default constructor
          */
-        Graph();
+        Graph() = default;
         ~Graph();
 
         /**
-         * inserts a vertex into our hashmap
+         * inserts a vertex into our hashmap if it doesn't exist
          * @param artistName name of the artist
          * @param id artist's Spotify ID
-         * @return the pointer to the vertex added
+         * @return the pointer to the vertex added, or a pointer to the vertex with the exisitng id
          * */
         Vertex* insertVertex(const string& artistName, const string& id);
 
@@ -52,7 +52,7 @@ class Graph {
          * gets all vertices in our graph
          * @return vector of pointers of all our vertices
          * */
-        vector<Vertex*> getAllVertices();
+        vector<Vertex*> getAllVertices() const;
 
         /**
          * gets all edges in our graph
@@ -65,29 +65,36 @@ class Graph {
          * @param v pointer to the vertex that we want the incident edges of
          * @return vector of all the edges that come from this vertex
          * */
-        vector<Edge> getIncidentEdges(Vertex* v);
+        vector<Edge> getIncidentEdges(Vertex* v) const;
         
         /**
-         * checks whether the edge exists
+         * checks whether the edge exists, in O(deg(v)).
+         * Since the graph is undirected, it the order of the artists does not matter
          * @param firstArtist vertex pointer to the source artist
          * @param secondArtist vertex point to the destination artist
          * @param songID song's Spotify ID
          * @return whether or not the edge exists in our graph
          * */
-        bool checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
+        Edge* checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID);
+
+        /**@TODO, test for functionality
+         * gives a vertex given the id, basically a search
+         * */
+        Vertex* findVertex(string id);
 
 
         /**
-         * performs a call to BFS(int index) with the index defaulted to 0,
-         * this will likely be called since the database is based on index 0 of vertexList
-         */
-        void BFS();
+         * performs a call to BFS(int index) with the index defaulted to the position of the artist's name in the VertexList
+         * this will likely be called since the traversal is based on the starting vertex
+         * @param name the name of the artist to begin the traversal at
+         */ 
+        list<Vertex*> BFS(string name);
 
         /**
          * performs a breadth-first search of the graph object
          * @param index index of the vertex to start the traversal from
          */
-        void BFS(unsigned index);
+        list<Vertex*> BFS(unsigned index);
 
     private:
         unordered_map<string, Vertex*> vertexList; // maps artist id to vertex

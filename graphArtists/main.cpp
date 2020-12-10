@@ -7,26 +7,48 @@
 #include <vector>
 
 int main(int argc, char** argv) {
-    vector<vector<string>> data = CSVParser::parseCSV("small_test.csv");
+    unsigned count = 0;
+    vector<vector<string>> data = CSVParser::parseCSV("dijkstra_test.csv");
 
     Graph g = CSVParser::dataToGraph(data);
-    //data is currently all strings, will need to
-    std::vector<Vertex*> artists = g.getAllVertices();
 
+    std::vector<Vertex*> artists = g.getAllVertices();
     std::cout << "All artists in graph: ";
-    for (unsigned i = 0; i < artists.size() - 1; i++) {
-        std::cout << artists[i]->getName() << ", ";
+    for (Vertex* v : artists) {
+        if (count == artists.size() - 1) {
+            std::cout << v->getName() << ".";
+        } else {
+            std::cout << v->getName() << ", ";
+        }
+        count++;
     }
-    std::cout << artists[artists.size() - 1] << std::endl;
+    std::cout << std::endl;
+    count = 0;
 
     std::vector<Edge> songs = g.getAllEdges();
     std::cout << "All songs in graph: ";
-    for (unsigned j = 0; j < songs.size() - 1; j++) {
-        std::cout << songs[j].getName() << ", ";
+    for (Edge e : songs) {
+        if (count == songs.size() - 1) {
+            std::cout << e.getName() << ".";
+        } else {
+            std::cout << e.getName() << ", ";
+        }
+        count++;
     }
-    std::cout << songs[songs.size() - 1].getName() << std::endl;
-    std::cout << "-+-+-+-+-+-+-+-+-+-+-+-+-+-+" << std::endl;
-    g.BFS();
+    std::cout << std::endl;
+    count = 0;
 
+    std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" << std::endl << "BFS TRAVERSAL: " << std::endl;
+    list<Vertex*> traversal = g.BFS();
+    for (Vertex* v : traversal) {
+        if (count == artists.size() - 1) {
+            std::cout << v->getName() << ".";
+        } else {
+            std::cout << v->getName() << ", ";
+        }
+        count++;
+    }
+    std::cout << std::endl;
+    count = 0;
     return 0;
 }

@@ -1,4 +1,3 @@
-
 #include "csvParser.h"
 
 vector<vector<string>> CSVParser::parseCSV(string filename) {
@@ -21,11 +20,36 @@ vector<vector<string>> CSVParser::parseCSV(string filename) {
     }
 
     while(std::getline(csv, line)) {
-        std::stringstream ss(line);
+       
         vector<string> columns;
-        while(std::getline(ss, colname, ',')) {
-            columns.push_back(colname);
+        std::stringstream col_ss;
+        string quote = "\"";
+        for(size_t i = 0; i < line.size(); i++) {
+            
+            if (line[i] == quote[0]) {
+                i++;
+                while (line[i] != quote[0]) {
+                    col_ss << line[i];
+                    i++;
+                }
+
+                columns.push_back(col_ss.str());
+                //clear col_ss
+                col_ss.str(string());
+                i++; //skip the next comma
+                continue;
+            }
+            
+            if (line[i] == ',') {
+                columns.push_back(col_ss.str());
+                //clear col_ss
+                col_ss.str(string());
+                continue;
+            }
+            col_ss << line[i];
+            
         }
+        columns.push_back(col_ss.str());
         data.push_back(columns);
     }
     return data;

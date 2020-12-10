@@ -1,12 +1,6 @@
 
 #include "graph.h"
-
-#include <unordered_map>
 #include <iostream>
-
-Graph::Graph() {
-
-}
 
 Graph::~Graph() {
     for (unordered_map<string, Vertex*>::iterator it = vertexList.begin(); it != vertexList.end(); ++it) {
@@ -18,10 +12,6 @@ Graph::~Graph() {
     }
 }
 
-/**
- * Checks the vertex list for vertexes with the current artist. If so, returns a reference to that vertex.
- * Otherwise, it will create a new vertex and add it to the vertex list.
- */
 Vertex* Graph::insertVertex(const string& id, const string& artistName) {
     if (vertexList.find(id) != vertexList.end()) {
         return vertexList[id];
@@ -33,11 +23,6 @@ Vertex* Graph::insertVertex(const string& id, const string& artistName) {
     return artist;
 }
 
-/**
- * Loops through both artists to ensure that there isn't already an edge between the two artists for the
- * same song. If not, construct an edge and add it to the edge list. Then, add the edge to the list of
- * edges held in each vertex.
- */
 bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songID, string songTitle, int songLength) {
     if (checkIfEdgeExists(firstArtist, secondArtist, songID)) {
         return false;
@@ -52,22 +37,22 @@ bool Graph::insertEdge(Vertex* firstArtist, Vertex* secondArtist, string songID,
     return true;
 }
 
-bool Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID) {
-    vector<Edge> firstArtistSongs = getIncidentEdges(firstArtist);
-
-    for (Edge song : firstArtistSongs) {
-        std::pair<std::string, std::string> songArtists = song.getArtistIDs();
+Edge* Graph::checkIfEdgeExists(Vertex* firstArtist, Vertex* secondArtist, string songID) {
+    for (Edge* song : firstArtist->getEdges()) {
+        std::pair<std::string, std::string> songArtists = song->getArtistIDs();
         
-        if (song.getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && vertexList[songArtists.second]->getName() == secondArtist->getName()) 
-            || (vertexList[songArtists.first]->getName() == secondArtist->getName() && vertexList[songArtists.second]->getName() == firstArtist->getName()))) {
-            return true;
+        if (song->getId() == songID && ((vertexList[songArtists.first]->getName() == firstArtist->getName() && 
+        vertexList[songArtists.second]->getName() == secondArtist->getName()) 
+            || (vertexList[songArtists.first]->getName() == secondArtist->getName() 
+            && vertexList[songArtists.second]->getName() == firstArtist->getName()))) {
+            return song;
         }
     }
 
-    return false;
+    return nullptr;
 }
 
-vector<Vertex*> Graph::getAllVertices() {
+vector<Vertex*> Graph::getAllVertices() const{
     vector<Vertex*> artists;
 
     for (std::pair<string, Vertex*> cur : vertexList) {
@@ -85,7 +70,7 @@ vector<Edge> Graph::getAllEdges() {
     return edges;
 }
 
-vector<Edge> Graph::getIncidentEdges(Vertex* v) {
+vector<Edge> Graph::getIncidentEdges(Vertex* v) const {
     vector<Edge> edges;
     for (Edge* e : v->getEdges()) {
         edges.push_back(*e);
@@ -93,64 +78,79 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) {
     return edges;
 }
 
-// CHANGE RETURN TYPE!
-void Graph::BFS() {
-    BFS(0);
+Vertex* Graph::findVertex(string id) {
+    //if vertex exists since this would create a new vertex in the hashmap i think
+    if (vertexList.find(id) == vertexList.end()) {
+        std::cout << "This vertex does not exist, sorry" << std::endl;
+        return nullptr;
+    }
+    return (vertexList.find(id))->second;
 }
 
-// !!! CHANGE RETURN TYPE
-void Graph::BFS(unsigned index) {
+list<Vertex*> Graph::BFS(string name) {
+    vector<Vertex*> artists = getAllVertices();
+    string temp = "";
+    for (Vertex* v : artists) {
+        if (v->getName() == name) {temp = v->getId(); }
+    }
+    if (temp.empty()) {
+        std::cout << "No artist found.. :(" << std::endl;
+        return list<Vertex*>(); 
+    }
+    auto it = vertexList.find(temp);
+    unsigned index = distance(vertexList.begin(), it);
+    return BFS(index);
+}
+
+list<Vertex*> Graph::BFS(unsigned index) {
+    // vector of vertices
     vector<Vertex*> artistsVect = getAllVertices(); // stores vertices of all artists
-    if (index < vertexList.size()) {
+    if (index >= artistsVect.size()) {return list<Vertex*>(); }
+        // keeps count of the total number of vertices
+        unsigned vertexCount = 1;
 
-        // vector of vertices
-        std::vector<Vertex*> vertices = getAllVertices();
+        // visitation bools - initialized unordered map based on artist IDs.
+        unordered_map<Vertex*, bool> visited;
+        for (Vertex* v : artistsVect) {
+            visited.insert(std::pair<Vertex*, bool>(v, false));
+        }
 
-        // struct unordered_set for managing visited vertices
-        // struct VertexHash
-        // {
-        // std::size_t operator()(const Vertex& v) const
-        //     {
-        //     using std::size_t;
-        //     using std::hash;
-        //     using std::string;
-
-        //     return hash<string>()(v.getId());
-        //     }
-        // };
-        // std::unordered_set<Vertex, VertexHash> visited;
-
-        // queue for BFS
+        // queue and return queue for BFS
         list<Vertex*> queue;
+        list<Vertex*> returnQueue;
 
         // queue up first vertex
-        // visited.insert(*vertices[index]);
-        queue.push_back(vertices[index]);
+        queue.push_back(artistsVect[index]);
+        returnQueue.push_back(artistsVect[index]);
+        visited[artistsVect[index]] = true;
 
         while (!queue.empty()) {
             // dequeue front most vertex
             Vertex* v = queue.front();
             queue.pop_front();
 
-            // print vertex data
-            v->print();
-
             // get adjacent vertices using edgeList
             std::vector<Edge*> adjList = v->getEdges();
             for (auto it = adjList.begin(); it != adjList.end(); it++) {
                 std::pair<string, string> ids = (*it)->getArtistIDs();
-                string v1 = ids.first;
-                string v2 = ids.second;
-                if (v1 == v->getId()) { // v1 is the artist, so try to add v2 to queue
-                    // if (!visit["idx"]) {
-                    //     queue.push_back("v2"); // O(1) lookup based on ID
-                    // }
-                } else { // v2 is the artist, so try to add v1 to queue
-                    // if (!visit["idx"]) {
-                    //     queue.push_back("v1");
-                    // }
+                Vertex* v1 = vertexList[ids.first];
+                Vertex* v2 = vertexList[ids.second];
+                if (!visited.at(v1)) {
+                    queue.push_back(v1);
+                    returnQueue.push_back(v1);
+                    vertexCount++;
+                    visited[v1] = true; 
+                } 
+                if (!visited.at(v2)) {
+                    queue.push_back(v2);
+                    returnQueue.push_back(v2);
+                    vertexCount++; 
+                    visited[v2] = true; 
+                }
+                if (vertexCount == artistsVect.size()) {
+                    break;
                 }
             }
         }
-    }
+    return returnQueue;
 }
