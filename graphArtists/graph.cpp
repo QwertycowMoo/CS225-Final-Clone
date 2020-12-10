@@ -93,27 +93,38 @@ vector<Edge> Graph::getIncidentEdges(Vertex* v) {
     return edges;
 }
 
+// CHANGE RETURN TYPE!
 void Graph::BFS() {
     BFS(0);
 }
 
+// !!! CHANGE RETURN TYPE
 void Graph::BFS(unsigned index) {
     vector<Vertex*> artistsVect = getAllVertices(); // stores vertices of all artists
     if (index < vertexList.size()) {
-        // visitation bool array
-        bool *visit = new bool[artistsVect.size()]; // runs parallel with artistsVect
-        for (unsigned i = 0; i < artistsVect.size(); i++) {
-            visit[i] = false;
-        }
 
         // vector of vertices
         std::vector<Vertex*> vertices = getAllVertices();
+
+        // struct unordered_set for managing visited vertices
+        // struct VertexHash
+        // {
+        // std::size_t operator()(const Vertex& v) const
+        //     {
+        //     using std::size_t;
+        //     using std::hash;
+        //     using std::string;
+
+        //     return hash<string>()(v.getId());
+        //     }
+        // };
+        // std::unordered_set<Vertex, VertexHash> visited;
 
         // queue for BFS
         list<Vertex*> queue;
 
         // queue up first vertex
-        visit[index] = true;
+        // visited.insert(*vertices[index]);
         queue.push_back(vertices[index]);
 
         while (!queue.empty()) {
@@ -131,13 +142,13 @@ void Graph::BFS(unsigned index) {
                 string v1 = ids.first;
                 string v2 = ids.second;
                 if (v1 == v->getId()) { // v1 is the artist, so try to add v2 to queue
-                    if (!visit["idx"]) {
-                        queue.push_back("v2");
-                    }
+                    // if (!visit["idx"]) {
+                    //     queue.push_back("v2"); // O(1) lookup based on ID
+                    // }
                 } else { // v2 is the artist, so try to add v1 to queue
-                    if (!visit["idx"]) {
-                        queue.push_back("v1");
-                    }
+                    // if (!visit["idx"]) {
+                    //     queue.push_back("v1");
+                    // }
                 }
             }
         }

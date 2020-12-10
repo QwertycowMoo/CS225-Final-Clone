@@ -8,6 +8,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <unordered_set>
 
 using std::list;
 using std::unordered_map;

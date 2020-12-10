@@ -19,15 +19,13 @@ int main(int argc, char** argv) {
     }
     std::cout << artists[artists.size() - 1] << std::endl;
 
-    //std::vector<Edge> songs = g.getAllEdges();
-    // std::cout << "All songs in graph:";
-    // for (Edge e : songs) {
-    //     std::cout << e.getName();
-    // }
-    // std::cout << std::endl;
-
-    //std::cout << songs.size() << std::endl;
-
+    std::vector<Edge> songs = g.getAllEdges();
+    std::cout << "All songs in graph: ";
+    for (unsigned j = 0; j < songs.size() - 1; j++) {
+        std::cout << songs[j].getName() << ", ";
+    }
+    std::cout << songs[songs.size() - 1].getName() << std::endl;
+    std::cout << "-+-+-+-+-+-+-+-+-+-+-+-+-+-+" << std::endl;
     g.BFS();
 
     return 0;

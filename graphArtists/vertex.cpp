@@ -11,14 +11,14 @@ Vertex::Vertex(const std::string& id, const std::string& name) : id_(id), name_(
 /**
  * @return the artist's ID
  */ 
-std::string Vertex::getId() {
+std::string Vertex::getId() const {
     return id_;
 }
 
 /**
  * @return the artist's name
  */ 
-std::string Vertex::getName() {
+std::string Vertex::getName() const {
     return name_;
 }
 
