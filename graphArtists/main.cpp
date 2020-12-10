@@ -100,17 +100,5 @@ int main(int argc, char* argv[]) {
         printPath(landmarkPath, g);
     }
 
-    std::cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" << std::endl << "BFS TRAVERSAL: " << std::endl;
-    list<Vertex*> traversal = g.BFS();
-    for (Vertex* v : traversal) {
-        if (count == artists.size() - 1) {
-            std::cout << v->getName() << ".";
-        } else {
-            std::cout << v->getName() << ", ";
-        }
-        count++;
-    }
-    std::cout << std::endl;
-    count = 0;
     return 0;
 }
