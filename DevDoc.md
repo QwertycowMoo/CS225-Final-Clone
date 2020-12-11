@@ -10,3 +10,6 @@ In today's meeting, the group discussed graph implementation and the overall pro
 
 Meeting 12/06/20
 In today's short meeting, the group discussed their current progress on key components of the progress: Beth and Cale finished a working version of the graph implementation, and they plan on adding more functions, (edge, vertex copy constructors); Kevin has been working theoretically on the Dijkstra's algorithm before planning to write the code; and Evan has been working on BFS traversal, with some key setbacks being solved during the discussion. In terms of the whole project, the group expects to meet their Wednesday (12/10/20) deadline of having the code finished. The remaining time established is to be used to create the presentation part of the final project.
+
+Meeting 12/10/20
+In today's meeting, the group prepared a powerpoint presentation for a high-level development video. Kevin initially created the presentation, and Evan, Cale and Beth each added information to slides based on the portion of the code they worked on. Afterwards, the group recorded the Zoom meeting, and Beth took the recording to be processed as a Youtube video. Finally, the group discussed any loose ends regarding the project and assigned roles for finishing the final 1-2 page project report.
