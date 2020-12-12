@@ -4,6 +4,8 @@ Final Project
 This project aims to create a graphical representation of artists on Spotify.
 The Vertices of the graph are Artists and the Edges represent songs that two Artists have collaborated on together.
 
+Presentation video [here](https://youtu.be/3ReWfrxZdWA).
+
 # Creating your own CSV:
 The CSV is ordered in this order:
 `ArtistId1,ArtistName1,ArtistId2,ArtistName2,SongId,SongName,SongLengthInMilliSeconds`
